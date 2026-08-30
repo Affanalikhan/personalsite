@@ -55,7 +55,7 @@ export default function RootLayout({
       lang="en"
       className={`${playfair.variable} ${cormorant.variable} ${inter.variable} h-full`}
     >
-      <body className="min-h-full antialiased bg-[var(--bg)] text-[var(--ink)]">
+      <body className="min-h-full antialiased" style={{ background: "var(--ivory)", color: "var(--charcoal)" }}>
         <CustomCursor />
         <Navbar />
         {children}
