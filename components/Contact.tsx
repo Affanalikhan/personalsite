@@ -142,14 +142,25 @@ export default function Contact() {
             initial={{ opacity: 0, y: 30 }}
             animate={headingInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
-            className="font-display text-4xl sm:text-5xl font-bold leading-tight max-w-2xl"
+            className="font-display text-4xl sm:text-5xl font-bold leading-tight max-w-2xl mb-5"
           >
             Let&apos;s figure out{" "}
-            <span className="font-editorial italic font-light gradient-text-gold">
+            <span style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontStyle: "italic", fontWeight: 300, color: "var(--gold)" }}>
               what&apos;s actually possible
             </span>{" "}
             for your business.
           </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={headingInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.22 }}
+            className="text-[var(--mist)] text-[0.95rem] leading-[1.8] max-w-xl"
+          >
+            Start with a free 30-minute discovery call — no pitch, no obligation.
+            We&apos;ll ask questions, understand your situation, and tell you honestly
+            whether and how we can help. If we&apos;re not the right fit, we&apos;ll say so.
+          </motion.p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-14">

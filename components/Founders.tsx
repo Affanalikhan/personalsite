@@ -8,61 +8,58 @@ const FOUNDERS = [
   {
     name: "Affan Ali Khan",
     role: "Co-Founder",
-    focus: "AI Strategy & Data Science",
-    bio: "Affan brings deep expertise in predictive modeling, agentic AI architecture, and business analytics. He leads client engagements where the core challenge is turning messy, complex data into decisions that move the needle — and building the AI frameworks that sustain that advantage over time.",
+    focus: "Data Science & AI Architecture",
+    bio: "Affan leads the technical side of A&O Holdings. His work sits at the intersection of data science and AI systems engineering — from building predictive models that inform high-stakes business decisions, to designing multi-agent AI frameworks that operate inside real workflows.",
+    extended:
+      "He takes a problem-first approach to every engagement: the right technical solution only becomes clear after you fully understand what the business is actually trying to achieve. Affan has experience across the full data science lifecycle — problem framing, feature engineering, model development, MLOps, and deployment — and brings the same rigour to agentic AI architecture and AI-native web development. He believes the best technical work is the kind that becomes invisible: it just makes the business run better.",
     linkedin: "https://linkedin.com/in/affan-ali-khan",
     initials: "AK",
     accentColor: "#1e4d8c",
+    tags: ["Predictive Modeling", "Agentic AI", "ML Engineering", "AI-Powered Web"],
   },
   {
-    name: "Muhammad Umar Khan",
+    name: "Mohammed Omer Khan",
     role: "Co-Founder",
-    focus: "Business Development & AI Enablement",
-    bio: "Umar operates at the intersection of commercial strategy and AI implementation. He leads engagements spanning AI-powered web development, workflow automation, and contract acquisition — translating what's technically possible into what's commercially valuable for each client.",
-    linkedin: "https://linkedin.com/in/muhammad-umar-khan",
-    initials: "MK",
+    focus: "Commercial Strategy & AI Enablement",
+    bio: "Omer leads the commercial and strategic side of A&O Holdings. He owns client relationships, business development, and the translation of AI capability into business value — and has a sharp instinct for where AI creates genuine advantage versus where it's a distraction.",
+    extended:
+      "He runs engagements spanning AI strategy advisory, workflow automation, contract acquisition, and sales infrastructure. His approach is direct and grounded in commercial reality: every recommendation is tested against ROI, feasibility, and what the client's team can actually sustain long-term. Omer is the reason clients understand what they're getting before a single line of code is written — and the reason they come back when the next problem surfaces.",
+    linkedin: "https://linkedin.com/in/mohammed-omer-khan",
+    initials: "OK",
     accentColor: "#c9a84c",
+    tags: ["AI Strategy", "Business Development", "AI Automation", "Contract Acquisition"],
   },
 ];
 
-function FounderCard({
-  founder,
-  index,
-}: {
-  founder: (typeof FOUNDERS)[0];
-  index: number;
-}) {
+function FounderCard({ founder, index }: { founder: (typeof FOUNDERS)[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
     <motion.article
       ref={ref}
-      initial={{ opacity: 0, y: 60 }}
+      initial={{ opacity: 0, y: 44 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.9, delay: index * 0.18, ease: EASE }}
-      className="group relative"
+      transition={{ duration: 0.9, delay: index * 0.16, ease: EASE }}
     >
-      {/* Card */}
-      <div className="glass-card overflow-hidden transition-all duration-500 hover:border-[var(--gold)]/30 hover:shadow-[0_0_80px_rgba(201,168,76,0.06)]">
+      <div className="border border-white/[0.07] overflow-hidden transition-all duration-500 hover:border-white/[0.12] hover:shadow-[0_0_50px_rgba(201,168,76,0.04)] h-full"
+        style={{ background: `linear-gradient(160deg, ${founder.accentColor}06 0%, transparent 50%)` }}
+      >
         {/* Top accent */}
         <div
-          className="h-px w-full"
-          style={{
-            background: `linear-gradient(90deg, ${founder.accentColor}, transparent)`,
-          }}
+          className="h-[2px]"
+          style={{ background: `linear-gradient(90deg, ${founder.accentColor}, ${founder.accentColor}20)` }}
           aria-hidden="true"
         />
 
-        <div className="p-8 md:p-10">
-          <div className="flex items-start justify-between gap-6 mb-8">
-            {/* Avatar */}
+        <div className="p-8 lg:p-10">
+          {/* Header */}
+          <div className="flex items-start justify-between gap-4 mb-7">
             <div className="relative flex-shrink-0">
-              {/* Placeholder avatar with initials — replace with real photo via <Image> */}
               <div
-                className="w-20 h-20 flex items-center justify-center border-2 font-display text-xl font-bold"
+                className="w-14 h-14 flex items-center justify-center border font-display text-base font-bold tracking-widest"
                 style={{
-                  borderColor: `${founder.accentColor}60`,
+                  borderColor: `${founder.accentColor}45`,
                   background: `linear-gradient(135deg, ${founder.accentColor}15, ${founder.accentColor}05)`,
                   color: founder.accentColor,
                 }}
@@ -70,54 +67,59 @@ function FounderCard({
               >
                 {founder.initials}
               </div>
-              {/* Corner mark */}
               <div
-                className="absolute -bottom-1 -right-1 w-4 h-4"
-                style={{ background: founder.accentColor, opacity: 0.7 }}
+                className="absolute -bottom-1 -right-1 w-3 h-3"
+                style={{ background: founder.accentColor, opacity: 0.75 }}
                 aria-hidden="true"
               />
             </div>
 
-            {/* LinkedIn */}
             <a
               href={founder.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-eyebrow text-[var(--mist)] hover:text-[var(--cream)] transition-colors duration-300 border border-[var(--gold)]/15 px-3 py-2 hover:border-[var(--gold)]/40"
+              className="flex items-center gap-2 text-[0.6rem] font-semibold tracking-[0.15em] uppercase text-[var(--mist)] hover:text-[var(--cream)] transition-colors duration-300 border border-white/[0.08] px-3 py-2 hover:border-[var(--gold)]/30 mt-0.5"
               aria-label={`${founder.name} on LinkedIn`}
             >
-              <svg
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="w-4 h-4"
-                aria-hidden="true"
-              >
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3" aria-hidden="true">
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
               </svg>
               LinkedIn
             </a>
           </div>
 
-          {/* Name & role */}
-          <h3 className="font-display text-2xl font-semibold text-[var(--cream)] mb-1">
+          {/* Name */}
+          <h3 className="font-display text-[1.4rem] font-semibold text-[var(--cream)] mb-0.5 leading-tight">
             {founder.name}
           </h3>
-          <p className="text-eyebrow mb-1" style={{ color: founder.accentColor }}>
+          <p className="text-[0.6rem] font-semibold tracking-[0.18em] uppercase mb-1" style={{ color: founder.accentColor }}>
             {founder.role}
           </p>
-          <p className="text-[var(--mist)] text-xs tracking-wide mb-6">
-            {founder.focus}
-          </p>
+          <p className="text-[var(--mist)] text-xs mb-6">{founder.focus}</p>
 
           {/* Divider */}
-          <div
-            className="h-px mb-6 w-12"
-            style={{ background: `${founder.accentColor}60` }}
-            aria-hidden="true"
-          />
+          <div className="h-px mb-6" style={{ background: `linear-gradient(90deg, ${founder.accentColor}35, transparent)` }} aria-hidden="true" />
 
           {/* Bio */}
-          <p className="text-[var(--mist)] text-sm leading-relaxed">{founder.bio}</p>
+          <p className="text-[var(--cream)]/80 text-sm leading-[1.85] mb-4">
+            {founder.bio}
+          </p>
+          <p className="text-[var(--mist)] text-sm leading-[1.85] mb-7">
+            {founder.extended}
+          </p>
+
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2">
+            {founder.tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-[0.55rem] font-semibold tracking-[0.12em] uppercase px-2.5 py-1 border"
+                style={{ borderColor: `${founder.accentColor}28`, color: `${founder.accentColor}bb` }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </motion.article>
@@ -127,54 +129,42 @@ function FounderCard({
 export default function Founders() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
-  const headingInView = useInView(headingRef, { once: true, margin: "-80px" });
+  const headingInView = useInView(headingRef, { once: true, margin: "-60px" });
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-  const bgY = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
   return (
     <section
       id="founders"
       ref={sectionRef}
       className="relative section-transition overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(180deg, var(--navy) 0%, #091830 50%, var(--navy) 100%)",
-      }}
+      style={{ background: "linear-gradient(180deg, #081220 0%, #060f1c 50%, #0a1628 100%)" }}
       aria-labelledby="founders-heading"
     >
-      {/* Parallax watermark */}
       <motion.div
         style={{ y: bgY }}
-        className="absolute left-[-4%] top-1/2 -translate-y-1/2 font-display text-[18vw] font-bold text-white/[0.015] leading-none select-none pointer-events-none whitespace-nowrap"
+        className="absolute left-[-2%] top-1/2 -translate-y-1/2 font-display text-[16vw] font-bold text-white/[0.016] leading-none select-none pointer-events-none whitespace-nowrap"
         aria-hidden="true"
       >
         FOUNDERS
       </motion.div>
 
-      <div className="absolute inset-0 grid-lines opacity-30 pointer-events-none" aria-hidden="true" />
-
-      {/* Top radial glow */}
+      <div className="absolute inset-0 grid-lines opacity-25 pointer-events-none" aria-hidden="true" />
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at top, rgba(30,77,140,0.2) 0%, transparent 70%)",
-        }}
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] pointer-events-none"
+        style={{ background: "radial-gradient(ellipse at top, rgba(30,77,140,0.12) 0%, transparent 70%)" }}
         aria-hidden="true"
       />
 
       <div className="section-pad container-site relative z-10">
+
         {/* Header */}
-        <div ref={headingRef} className="mb-16 max-w-2xl">
+        <div ref={headingRef} className="mb-14 max-w-2xl">
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={headingInView ? { opacity: 1, y: 0 } : {}}
+            initial={{ opacity: 0, y: 18 }} animate={headingInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="text-eyebrow mb-6 flex items-center gap-3"
+            className="text-eyebrow mb-5 flex items-center gap-3"
           >
             <span className="inline-block w-8 h-px bg-[var(--gold)]" />
             The Team
@@ -182,56 +172,59 @@ export default function Founders() {
 
           <motion.h2
             id="founders-heading"
-            initial={{ opacity: 0, y: 30 }}
-            animate={headingInView ? { opacity: 1, y: 0 } : {}}
+            initial={{ opacity: 0, y: 24 }} animate={headingInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
-            className="font-display text-4xl sm:text-5xl font-bold leading-tight mb-6"
+            className="font-display text-4xl sm:text-5xl font-bold leading-tight mb-5"
           >
             Two founders.{" "}
-            <span className="font-editorial italic font-light gradient-text-gold">
+            <span style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontStyle: "italic", fontWeight: 300, color: "var(--gold)" }}>
               One shared conviction.
             </span>
           </motion.h2>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={headingInView ? { opacity: 1, y: 0 } : {}}
+            initial={{ opacity: 0, y: 16 }} animate={headingInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-[var(--mist)] leading-relaxed"
+            className="text-[var(--mist)] leading-[1.8] text-[0.95rem]"
           >
-            A&O Holdings was built on the belief that AI and data, applied
-            with rigour and commercial honesty, can fundamentally change what
-            a business is capable of — regardless of its size.
+            A&amp;O Holdings is founder-led in the truest sense: both founders work
+            directly on client engagements. When you work with us, you get senior
+            expertise on every deliverable — not a junior team working off a template
+            while the founders are busy selling the next project.
           </motion.p>
         </div>
 
-        {/* Founder cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
+        {/* Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {FOUNDERS.map((founder, i) => (
             <FounderCard key={founder.name} founder={founder} index={i} />
           ))}
         </div>
 
-        {/* Bottom note */}
+        {/* Quote */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-          className="mt-16 pt-10 border-t border-[var(--gold)]/10 max-w-xl"
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="mt-14 pt-10 border-t border-[var(--gold)]/8 max-w-xl"
         >
-          <p className="text-[var(--mist)] text-sm italic leading-relaxed font-editorial text-lg">
-            &ldquo;We work as independent consultants — which means your company
-            gets senior-level expertise on every engagement, not a junior
-            team working off a playbook.&rdquo;
+          <p
+            className="text-[var(--cream)]/65 leading-[1.9] mb-4"
+            style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.15rem", fontStyle: "italic" }}
+          >
+            &ldquo;We started A&amp;O because we kept seeing the same pattern: companies
+            spending significant budget on AI and data projects that didn&apos;t move
+            the needle — not because the technology failed, but because no one had
+            properly identified the right problem to solve in the first place. That&apos;s
+            the gap we fill.&rdquo;
           </p>
-          <p className="text-eyebrow text-[var(--gold)]/60 mt-4">
-            — A&O Holdings
-          </p>
+          <p className="text-eyebrow text-[var(--gold)]/55">— Affan &amp; Omer, Co-Founders</p>
         </motion.div>
+
       </div>
 
-      <div className="divider-gold mt-0" aria-hidden="true" />
+      <div className="divider-gold" aria-hidden="true" />
     </section>
   );
 }

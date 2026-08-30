@@ -99,7 +99,7 @@ export default function Footer() {
             © {currentYear} A&O Holdings. All rights reserved.
           </p>
           <p className="text-[var(--mist)]/40 text-xs">
-            Co-founded by Affan Ali Khan &amp; Muhammad Umar Khan.
+            Co-founded by Affan Ali Khan &amp; Mohammed Omer Khan.
           </p>
         </div>
       </div>
