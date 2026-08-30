@@ -1,26 +1,220 @@
 @import "tailwindcss";
 
+/* ─── Design Tokens ─────────────────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink:        #0d0d0d;
+  --cream:      #f5f0e8;
+  --cream-dark: #ede6d8;
+  --navy:       #0a1628;
+  --navy-mid:   #112240;
+  --blue-accent:#1e4d8c;
+  --gold:       #c9a84c;
+  --gold-light: #e8c97a;
+  --mist:       #8b9ab0;
+  --surface:    #111827;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ─── Base ───────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--navy);
+  color: var(--cream);
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  cursor: none; /* custom cursor active */
+}
+
+/* Keep default cursor on interactive elements for accessibility */
+a, button, input, textarea, select, [role="button"] {
+  cursor: none;
+}
+
+/* ─── Custom Cursor ──────────────────────────────────────────────────────────── */
+#cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.08s ease, background 0.2s ease, width 0.2s ease, height 0.2s ease;
+  mix-blend-mode: normal;
+}
+
+#cursor-ring {
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+  opacity: 0.6;
+}
+
+body.cursor-hover #cursor-dot {
+  width: 12px;
+  height: 12px;
+  background: var(--gold-light);
+}
+
+body.cursor-hover #cursor-ring {
+  width: 56px;
+  height: 56px;
+  border-color: var(--gold-light);
+  opacity: 0.4;
+}
+
+/* ─── Typography Scale ───────────────────────────────────────────────────────── */
+.font-display {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  letter-spacing: -0.01em;
+}
+
+.font-editorial {
+  font-family: 'Cormorant Garamond', 'Georgia', serif;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+.text-eyebrow {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ─── Utility / Layout Helpers ───────────────────────────────────────────────── */
+.section-pad {
+  padding-top: 7rem;
+  padding-bottom: 7rem;
+}
+
+.container-site {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-site {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* ─── Noise texture overlay ──────────────────────────────────────────────────── */
+.noise-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  pointer-events: none;
+  opacity: 0.4;
+  z-index: 1;
+}
+
+/* ─── Gradient helpers ───────────────────────────────────────────────────────── */
+.gradient-navy {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 50%, #0d2347 100%);
+}
+
+.gradient-text-gold {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Grid line decoration ───────────────────────────────────────────────────── */
+.grid-lines {
+  background-image:
+    linear-gradient(rgba(200,168,76,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,168,76,0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+/* ─── Divider ────────────────────────────────────────────────────────────────── */
+.divider-gold {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.35;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--navy); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+/* ─── Selection ──────────────────────────────────────────────────────────────── */
+::selection {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+/* ─── Smooth section transitions ─────────────────────────────────────────────── */
+.section-transition {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ─── Card glass effect ──────────────────────────────────────────────────────── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ─── Focus styles ───────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* ─── Animated underline ─────────────────────────────────────────────────────── */
+.link-underline {
+  position: relative;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+
+.link-underline:hover::after {
+  width: 100%;
 }
