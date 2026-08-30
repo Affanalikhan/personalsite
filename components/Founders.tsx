@@ -13,7 +13,9 @@ const FOUNDERS = [
     extended: "He takes a problem-first approach to every engagement: the right technical solution only becomes clear after you fully understand what the business is actually trying to achieve. Affan has experience across the full data science lifecycle — problem framing, feature engineering, model development, MLOps, and deployment — and brings the same rigour to agentic AI architecture and AI-native web development.",
     linkedin: "https://linkedin.com/in/affan-ali-khan",
     initials: "AK",
-    color: "#2563a8",
+    accentBg: "#dbeafe",
+    accentText: "#1e40af",
+    accentBorder: "#93c5fd",
     tags: ["Predictive Modeling", "Agentic AI", "ML Engineering", "AI-Powered Web"],
   },
   {
@@ -24,7 +26,9 @@ const FOUNDERS = [
     extended: "He runs engagements spanning AI strategy advisory, workflow automation, contract acquisition, and sales infrastructure. His approach is direct and commercially grounded: every recommendation is tested against ROI, feasibility, and what the client's team can actually sustain. Omer is the reason clients understand exactly what they're getting before a single line of code is written.",
     linkedin: "https://linkedin.com/in/mohammed-omer-khan",
     initials: "OK",
-    color: "#c8a96e",
+    accentBg: "#fef9ec",
+    accentText: "#92400e",
+    accentBorder: "#d4aa55",
     tags: ["AI Strategy", "Business Development", "AI Automation", "Contract Acquisition"],
   },
 ];
@@ -35,37 +39,35 @@ function FounderCard({ f, i }: { f: typeof FOUNDERS[0]; i: number }) {
 
   return (
     <motion.article ref={ref}
-      initial={{ opacity: 0, y: 40 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.85, delay: i * 0.15, ease: EASE }}
+      initial={{ opacity: 0, y: 36 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, delay: i * 0.14, ease: EASE }}
       className="h-full"
     >
-      <div className="h-full border border-white/[0.08] overflow-hidden transition-all duration-400 hover:border-white/[0.15]"
-        style={{ background: `linear-gradient(160deg, ${f.color}08 0%, rgba(255,255,255,0.02) 60%, transparent 100%)` }}
+      <div className="h-full border transition-all duration-300 hover:shadow-[0_8px_40px_rgba(13,20,32,0.09)] overflow-hidden"
+        style={{ background: "var(--white)", borderColor: "var(--border)" }}
       >
-        {/* Top accent */}
-        <div className="h-[2px]" style={{ background: `linear-gradient(90deg, ${f.color}, transparent 70%)` }} aria-hidden="true" />
+        {/* Top accent stripe */}
+        <div className="h-1 w-full" style={{ background: f.accentBorder }} aria-hidden="true" />
 
         <div className="p-8 lg:p-10 flex flex-col h-full">
-          {/* FIX #3: Header row — avatar and LinkedIn side by side, explicit
-              mb-8 gap before name so avatar corner dot never bleeds into heading */}
-          <div className="flex items-start justify-between gap-4 mb-8">
+          {/* Header */}
+          <div className="flex items-start justify-between gap-4 mb-7">
             {/* Avatar */}
             <div className="relative flex-shrink-0">
-              <div className="w-14 h-14 border-2 flex items-center justify-center font-display text-lg font-bold tracking-wider"
-                style={{ borderColor: `${f.color}45`, background: `${f.color}12`, color: f.color }}
+              <div className="w-14 h-14 flex items-center justify-center border-2 font-display text-base font-bold tracking-wider"
+                style={{ background: f.accentBg, borderColor: f.accentBorder, color: f.accentText }}
                 aria-hidden="true"
-              >
-                {f.initials}
-              </div>
-              {/* Corner dot — clipped inside so it doesn't poke into sibling elements */}
+              >{f.initials}</div>
               <div className="absolute bottom-0 right-0 w-3 h-3 translate-x-1 translate-y-1"
-                style={{ background: f.color }} aria-hidden="true" />
+                style={{ background: f.accentBorder }} aria-hidden="true" />
             </div>
 
             {/* LinkedIn */}
             <a href={f.linkedin} target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-2 border transition-all duration-250 flex-shrink-0"
-              style={{ borderColor: "rgba(255,255,255,0.1)", color: "var(--cream-dim)" }}
+              className="flex items-center gap-2 px-3 py-2 border text-sm font-medium transition-all duration-200 flex-shrink-0"
+              style={{ borderColor: "var(--border)", color: "var(--ink-3)" }}
+              onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = f.accentBorder; el.style.color = f.accentText; }}
+              onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "var(--border)"; el.style.color = "var(--ink-3)"; }}
               aria-label={`${f.name} on LinkedIn`}
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5" aria-hidden="true">
@@ -75,30 +77,23 @@ function FounderCard({ f, i }: { f: typeof FOUNDERS[0]; i: number }) {
             </a>
           </div>
 
-          {/* FIX #3: Name block — clear margin-top so it never touches avatar area */}
-          <h3 className="font-display text-2xl font-semibold text-[var(--cream)] mb-1 leading-tight mt-1">
-            {f.name}
-          </h3>
-          <p className="eyebrow text-[0.62rem] mb-1" style={{ color: f.color }}>{f.role}</p>
-          <p className="text-sm mb-6" style={{ color: "var(--cream-dim)" }}>{f.focus}</p>
+          {/* Name block */}
+          <h3 className="font-display text-2xl font-semibold mb-1 leading-tight mt-1" style={{ color: "var(--ink)" }}>{f.name}</h3>
+          <p className="eyebrow text-[0.62rem] mb-1" style={{ color: f.accentText }}>{f.role}</p>
+          <p className="text-sm mb-6" style={{ color: "var(--ink-3)" }}>{f.focus}</p>
 
           {/* Rule */}
-          <div className="h-px mb-6" style={{ background: `linear-gradient(90deg, ${f.color}35, transparent)` }} aria-hidden="true" />
+          <div className="h-px mb-6" style={{ background: "var(--border)" }} aria-hidden="true" />
 
-          {/* FIX #4: bio line-height 1.75 */}
-          <p className="text-[0.9rem] mb-4" style={{ lineHeight: 1.75, color: "var(--cream)" }}>
-            {f.bio}
-          </p>
-          <p className="text-[0.9rem] mb-8" style={{ lineHeight: 1.75, color: "var(--cream-dim)" }}>
-            {f.extended}
-          </p>
+          {/* Bio */}
+          <p className="text-sm mb-4" style={{ lineHeight: 1.8, color: "var(--ink-2)" }}>{f.bio}</p>
+          <p className="text-sm mb-7" style={{ lineHeight: 1.8, color: "var(--ink-3)" }}>{f.extended}</p>
 
-          {/* FIX #6: tags — increased padding and gap */}
+          {/* Tags */}
           <div className="flex flex-wrap gap-2 mt-auto">
             {f.tags.map(t => (
               <span key={t} className="eyebrow text-[0.58rem] px-3 py-1.5 border"
-                style={{ borderColor: `${f.color}28`, color: `${f.color}cc` }}
-              >
+                style={{ borderColor: f.accentBorder, color: f.accentText, background: f.accentBg }}>
                 {t}
               </span>
             ))}
@@ -115,38 +110,34 @@ export default function Founders() {
 
   return (
     <section id="founders" aria-labelledby="founders-h2"
-      className="relative overflow-hidden"
-      style={{ background: "linear-gradient(180deg, #091422 0%, #07111d 100%)" }}
+      className="relative overflow-hidden" style={{ background: "var(--bg-2)" }}
     >
-      {/* Subtle glow */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" aria-hidden="true" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at top, rgba(37,99,168,0.1) 0%, transparent 65%)" }} aria-hidden="true" />
-      <div className="absolute inset-0 dot-grid opacity-40 pointer-events-none" aria-hidden="true" />
+      <div className="rule" aria-hidden="true" />
 
       <div className="wrap section-y relative z-10">
 
         {/* Header */}
         <div ref={headRef} className="mb-14 max-w-2xl">
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={headInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }}
-            className="flex items-center gap-3 mb-5"
+          <motion.div initial={{ opacity: 0, y: 14 }} animate={headInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.55 }} className="flex items-center gap-3 mb-5"
           >
-            <span className="w-8 h-px bg-[var(--gold)]" />
+            <span className="w-7 h-px" style={{ background: "var(--gold)" }} aria-hidden="true" />
             <span className="eyebrow">The Team</span>
           </motion.div>
 
           <motion.h2 id="founders-h2"
             initial={{ opacity: 0, y: 20 }} animate={headInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.75, delay: 0.1, ease: EASE }}
-            className="font-display font-bold leading-[1.1] mb-5"
-            style={{ fontSize: "clamp(1.9rem, 3.5vw, 2.75rem)" }}
+            transition={{ duration: 0.7, delay: 0.08, ease: EASE }}
+            className="font-display font-bold leading-tight mb-5"
+            style={{ fontSize: "clamp(1.8rem, 3.2vw, 2.6rem)", color: "var(--ink)" }}
           >
             Two founders.{" "}
-            <span className="font-serif font-light italic" style={{ color: "var(--gold)" }}>One shared conviction.</span>
+            <span className="font-serif font-light italic" style={{ color: "var(--gold-dark)" }}>One shared conviction.</span>
           </motion.h2>
 
-          <motion.p initial={{ opacity: 0, y: 14 }} animate={headInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.65, delay: 0.18 }}
-            className="text-[0.95rem] leading-[1.8]" style={{ color: "var(--cream-dim)" }}
+          <motion.p initial={{ opacity: 0, y: 14 }} animate={headInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.16 }}
+            className="text-[0.9375rem]" style={{ lineHeight: 1.8, color: "var(--ink-3)" }}
           >
             A&amp;O Holdings is founder-led in the truest sense: both founders work directly
             on client engagements. When you work with us, you get senior expertise on every
@@ -155,23 +146,26 @@ export default function Founders() {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {FOUNDERS.map((f, i) => <FounderCard key={f.name} f={f} i={i} />)}
         </div>
 
-        {/* Quote block */}
+        {/* Quote */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+          initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="mt-16 pt-12 border-t border-white/[0.06] max-w-2xl"
+          className="mt-14 pt-12 border-t max-w-2xl" style={{ borderColor: "var(--border)" }}
         >
-          <p className="font-serif italic leading-[1.9] mb-5 text-[1.1rem]" style={{ color: "var(--cream-dim)" }}>
-            &ldquo;We started A&amp;O because we kept seeing the same pattern: companies spending
+          <div className="w-8 h-8 flex items-center justify-center mb-5 border" style={{ borderColor: "var(--border-gold)", background: "var(--gold-pale)" }}>
+            <span className="font-serif text-xl font-bold" style={{ color: "var(--gold-dark)", lineHeight: 1 }}>&ldquo;</span>
+          </div>
+          <p className="font-serif italic text-[1.15rem] mb-5" style={{ lineHeight: 1.9, color: "var(--ink-2)" }}>
+            We started A&amp;O because we kept seeing the same pattern: companies spending
             significant budget on AI projects that didn&apos;t move the needle — not because
             the technology failed, but because no one had properly identified the right
-            problem to solve in the first place. That&apos;s the gap we fill.&rdquo;
+            problem to solve in the first place. That&apos;s the gap we fill.
           </p>
-          <p className="eyebrow text-[0.62rem]" style={{ color: "var(--gold-dim)" }}>
+          <p className="eyebrow text-[0.62rem]" style={{ color: "var(--gold-dark)" }}>
             — Affan &amp; Omer, Co-Founders
           </p>
         </motion.div>

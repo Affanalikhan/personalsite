@@ -2,20 +2,36 @@
 
 /* ─── Design Tokens ─────────────────────────────────────────────────────────── */
 :root {
-  --navy:        #080e1a;
-  --navy-1:      #0c1526;
-  --navy-2:      #0f1d33;
-  --navy-3:      #152340;
-  --cream:       #f2ece0;
-  --cream-dim:   #b8ad9e;
-  --gold:        #c8a96e;
-  --gold-bright: #e2c68a;
-  --gold-dim:    #9a7d4a;
-  --blue:        #2563a8;
-  --blue-dim:    #1a3d6b;
-  --slate:       #64748b;
-  --border:      rgba(255,255,255,0.10);
-  --border-gold: rgba(200,169,110,0.25);
+  /* Backgrounds */
+  --bg:          #fafaf8;
+  --bg-2:        #f4f3ef;
+  --bg-3:        #eceae4;
+  --bg-dark:     #0d1420;
+
+  /* Text */
+  --ink:         #0d1420;
+  --ink-2:       #2c3444;
+  --ink-3:       #5c6578;
+  --ink-light:   #9aa0ae;
+
+  /* Accent — gold */
+  --gold:        #b8913a;
+  --gold-light:  #d4aa55;
+  --gold-pale:   #f5e9cc;
+  --gold-dark:   #8a6b28;
+
+  /* Navy */
+  --navy:        #0d1420;
+  --navy-2:      #162035;
+  --navy-3:      #1e2d4a;
+
+  /* White */
+  --white:       #ffffff;
+
+  /* Borders */
+  --border:      rgba(13,20,32,0.10);
+  --border-2:    rgba(13,20,32,0.06);
+  --border-gold: rgba(184,145,58,0.30);
 }
 
 /* ─── Reset ──────────────────────────────────────────────────────────────────── */
@@ -23,11 +39,10 @@
 html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
-  background: var(--navy);
-  color: var(--cream);
+  background: var(--bg);
+  color: var(--ink);
   font-family: var(--font-inter, 'Inter', system-ui, sans-serif);
   font-size: 16px;
-  /* FIX #4: body line-height */
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -37,150 +52,104 @@ body {
 a, button, input, textarea, select, [role="button"] { cursor: none; }
 
 /* ─── Custom cursor ──────────────────────────────────────────────────────────── */
-/* FIX #1: cursor z-index BELOW text content (z-index of page text is auto/0,
-   keep cursor below all stacking contexts by using z-index values under 100
-   for content layers and 9998/9999 only for the cursor which uses position:fixed
-   so it never intersects the document flow) */
 #cursor-dot {
   width: 6px; height: 6px;
   background: var(--gold);
   border-radius: 50%;
   position: fixed; top: 0; left: 0;
-  pointer-events: none;
-  /* Raised enough to always show, but fixed positioning means it never
-     participates in document stacking — it won't cover inline text */
-  z-index: 9999;
+  pointer-events: none; z-index: 9999;
   transform: translate(-50%, -50%);
   transition: width 0.15s, height 0.15s, background 0.2s, opacity 0.3s;
 }
 #cursor-ring {
-  width: 32px; height: 32px;
-  border: 1px solid rgba(200,169,110,0.45);
+  width: 30px; height: 30px;
+  border: 1.5px solid rgba(184,145,58,0.4);
   border-radius: 50%;
   position: fixed; top: 0; left: 0;
   pointer-events: none; z-index: 9998;
   transform: translate(-50%, -50%);
   transition: width 0.25s, height 0.25s, border-color 0.25s, opacity 0.4s;
 }
-body.cursor-hover #cursor-dot { width: 10px; height: 10px; background: var(--gold-bright); }
-body.cursor-hover #cursor-ring { width: 48px; height: 48px; border-color: rgba(200,169,110,0.3); }
+body.cursor-hover #cursor-dot  { width: 10px; height: 10px; background: var(--gold-light); }
+body.cursor-hover #cursor-ring { width: 46px; height: 46px; border-color: rgba(184,145,58,0.25); }
 
 /* ─── Typography ─────────────────────────────────────────────────────────────── */
 .font-display { font-family: var(--font-playfair, 'Playfair Display', Georgia, serif); }
 .font-serif   { font-family: var(--font-cormorant, 'Cormorant Garamond', Georgia, serif); }
 
+/* Eyebrow label */
 .eyebrow {
   font-family: var(--font-inter, 'Inter', system-ui, sans-serif);
-  font-size: 0.68rem;
+  font-size: 0.67rem;
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--gold);
 }
 
-/* FIX #4 + #11: paragraph text gets explicit line-height and size */
-p { line-height: 1.7; }
-p.body-text {
-  font-size: 0.9375rem; /* 15px */
-  line-height: 1.75;
-  color: var(--cream-dim);
-}
-
-/* FIX #11: heading scale — clear jumps between h1→h2→h3 */
+p  { line-height: 1.75; }
 h1 { line-height: 1.06; }
-h2 { line-height: 1.1; }
-h3 { line-height: 1.2; font-size: 1.125rem; }
+h2 { line-height: 1.1;  }
+h3 { line-height: 1.2;  }
 
 /* ─── Layout ─────────────────────────────────────────────────────────────────── */
 .wrap {
   max-width: 1200px;
   margin-inline: auto;
-  /* FIX #5: consistent horizontal padding across breakpoints */
   padding-inline: clamp(1.25rem, 5vw, 4rem);
 }
-
-/* FIX #5: section vertical rhythm using spacing scale */
 .section-y { padding-block: clamp(4rem, 8vw, 7rem); }
 
-/* ─── Cards ──────────────────────────────────────────────────────────────────── */
-/* FIX #7 + #10: higher contrast border so card boundaries are legible */
+/* ─── Surfaces ───────────────────────────────────────────────────────────────── */
 .card {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.12);
-  transition: border-color 0.3s, background 0.3s;
+  background: var(--white);
+  border: 1px solid var(--border);
+  transition: border-color 0.25s, box-shadow 0.25s;
 }
 .card:hover {
-  background: rgba(255,255,255,0.065);
-  border-color: rgba(255,255,255,0.2);
+  border-color: rgba(13,20,32,0.18);
+  box-shadow: 0 4px 24px rgba(13,20,32,0.07);
 }
 .card-active {
-  background: rgba(200,169,110,0.08);
-  border: 1px solid rgba(200,169,110,0.4);
-  box-shadow: 0 0 0 1px rgba(200,169,110,0.1);
+  background: var(--white);
+  border: 1.5px solid var(--gold);
+  box-shadow: 0 4px 32px rgba(184,145,58,0.12);
 }
 
-/* ─── Dot grid ───────────────────────────────────────────────────────────────── */
-.dot-grid {
-  background-image: radial-gradient(rgba(255,255,255,0.055) 1px, transparent 1px);
-  background-size: 32px 32px;
-}
-
-/* ─── Section divider ────────────────────────────────────────────────────────── */
-/* FIX #10: brighter rule so section boundaries are visible */
+/* ─── Section rule ───────────────────────────────────────────────────────────── */
 .rule {
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(200,169,110,0.3) 30%, rgba(200,169,110,0.3) 70%, transparent 100%);
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
 }
 
-/* ─── Utility ────────────────────────────────────────────────────────────────── */
-.text-gold-gradient {
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* ─── Dot grid (subtle, light) ───────────────────────────────────────────────── */
+.dot-grid {
+  background-image: radial-gradient(rgba(13,20,32,0.07) 1px, transparent 1px);
+  background-size: 28px 28px;
 }
 
-:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
-::selection { background: var(--gold); color: var(--navy); }
-
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: var(--navy); }
-::-webkit-scrollbar-thumb { background: var(--gold-dim); }
-
-.hover-line { position: relative; }
+/* ─── Utilities ──────────────────────────────────────────────────────────────── */
+.hover-line { position: relative; display: inline-block; }
 .hover-line::after {
-  content: '';
-  position: absolute;
-  bottom: -1px; left: 0;
-  width: 0; height: 1px;
-  background: var(--gold);
-  transition: width 0.3s;
+  content: ''; position: absolute;
+  bottom: -1px; left: 0; width: 0; height: 1px;
+  background: var(--gold); transition: width 0.3s;
 }
 .hover-line:hover::after { width: 100%; }
 
-/* FIX #6: pill/tag spacing */
-.tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.3rem 0.75rem;
-  font-size: 0.6rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  border: 1px solid;
-  line-height: 1;
-}
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+::selection    { background: var(--gold); color: var(--white); }
 
-/* ─── Touch / mobile cursor reset ───────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+/* ─── Touch devices ──────────────────────────────────────────────────────────── */
 @media (hover: none) {
   body, a, button, input, textarea, select, [role="button"] { cursor: auto; }
   #cursor-dot, #cursor-ring { display: none !important; }
 }
 
-/* ─── Mobile-specific base overrides ────────────────────────────────────────── */
 @media (max-width: 767px) {
-  /* FIX #5: tighten section padding on small screens */
   .section-y { padding-block: 3.5rem; }
-  /* FIX #11: slightly reduce heading scale on mobile */
-  h1 { line-height: 1.08; }
 }

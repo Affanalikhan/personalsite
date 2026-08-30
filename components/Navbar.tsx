@@ -21,7 +21,7 @@ export default function Navbar() {
   const [active,   setActive]   = useState("");
 
   useEffect(() => {
-    const h = () => setScrolled(window.scrollY > 60);
+    const h = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", h, { passive: true });
     return () => window.removeEventListener("scroll", h);
   }, []);
@@ -38,7 +38,6 @@ export default function Navbar() {
     return () => obs.disconnect();
   }, []);
 
-  /* FIX #2 & #8: lock body scroll when mobile menu is open */
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -48,41 +47,40 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ── Header bar ────────────────────────────────────────────────────── */}
       <motion.header
         initial={{ y: -64, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.75, ease: EASE }}
-        className="fixed inset-x-0 top-0 z-50 transition-all duration-400"
+        transition={{ duration: 0.7, ease: EASE }}
+        className="fixed inset-x-0 top-0 z-50 transition-all duration-300"
         style={{
-          paddingBlock: scrolled || open ? "0.625rem" : "1.125rem",
-          background: scrolled || open ? "var(--navy-1)" : "transparent",
-          borderBottom: scrolled || open ? "1px solid rgba(255,255,255,0.08)" : "1px solid transparent",
+          paddingBlock: scrolled ? "0.75rem" : "1.25rem",
+          background: scrolled ? "rgba(250,250,248,0.97)" : "rgba(250,250,248,0.0)",
+          borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
+          backdropFilter: scrolled ? "blur(12px)" : "none",
         }}
       >
         <div className="wrap flex items-center justify-between">
 
           {/* Logo */}
-          <Link href="/" onClick={close} className="group flex items-center gap-2.5 flex-shrink-0" aria-label="A&O Holdings">
-            <div className="w-8 h-8 border flex items-center justify-center transition-colors duration-300"
-              style={{ borderColor: "var(--border-gold)" }}
-              onMouseEnter={e => (e.currentTarget.style.borderColor = "var(--gold)")}
-              onMouseLeave={e => (e.currentTarget.style.borderColor = "var(--border-gold)")}
+          <Link href="/" onClick={close} className="flex items-center gap-3 flex-shrink-0 group" aria-label="A&O Holdings">
+            <div
+              className="w-9 h-9 flex items-center justify-center border transition-all duration-300 group-hover:border-[var(--gold)]"
+              style={{ borderColor: "var(--border-gold)", background: "var(--gold-pale)" }}
             >
-              <span className="font-display text-[0.56rem] font-bold text-[var(--gold)] tracking-[0.14em]">A&O</span>
+              <span className="font-display text-[0.58rem] font-bold tracking-[0.14em]" style={{ color: "var(--gold-dark)" }}>A&O</span>
             </div>
-            <span className="font-display text-[0.78rem] tracking-[0.22em] text-[var(--cream)] uppercase hidden sm:block">
+            <span className="font-display text-[0.8rem] font-semibold tracking-[0.2em] uppercase hidden sm:block" style={{ color: "var(--ink)" }}>
               Holdings
             </span>
           </Link>
 
-          {/* FIX #9: Desktop nav — visible at md+, hidden below md */}
-          <nav className="hidden md:flex items-center gap-7 lg:gap-9" aria-label="Primary">
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-8 lg:gap-10" aria-label="Primary">
             {NAV.map(({ label, href }) => (
               <a key={href} href={href}
                 onClick={e => { e.preventDefault(); scrollTo(href); }}
-                className="eyebrow text-[0.63rem] transition-colors duration-250"
-                style={{ color: active === href.slice(1) ? "var(--cream)" : "var(--cream-dim)" }}
+                className="eyebrow text-[0.63rem] transition-colors duration-200"
+                style={{ color: active === href.slice(1) ? "var(--ink)" : "var(--ink-3)" }}
               >
                 {label}
               </a>
@@ -90,101 +88,83 @@ export default function Navbar() {
           </nav>
 
           <div className="flex items-center gap-3">
-            {/* Desktop CTA — hidden below md */}
+            {/* Desktop CTA */}
             <a href="#contact"
               onClick={e => { e.preventDefault(); scrollTo("#contact"); }}
-              className="hidden md:inline-flex items-center gap-2 px-5 py-2 text-[0.8rem] font-semibold tracking-wide bg-[var(--gold)] text-[var(--navy)] hover:bg-[var(--gold-bright)] transition-colors duration-300"
+              className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 text-[0.8rem] font-semibold tracking-wide transition-all duration-300"
+              style={{ background: "var(--navy)", color: "var(--white)" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "var(--gold)"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "var(--navy)"; }}
             >
               Book a Call
             </a>
 
-            {/* FIX #9: Hamburger — shown ONLY below md */}
+            {/* Hamburger */}
             <button
               onClick={() => setOpen(v => !v)}
               className="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-[5px]"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
-              aria-controls="mobile-nav"
             >
-              <motion.span animate={open ? { rotate: 45, y: 6 }  : { rotate: 0, y: 0 }}  transition={{ duration: 0.25, ease: EASE }} className="block w-[20px] h-[1.5px] bg-[var(--cream)] origin-center" />
-              <motion.span animate={open ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }} transition={{ duration: 0.18 }}           className="block w-[20px] h-[1.5px] bg-[var(--cream)] origin-center" />
-              <motion.span animate={open ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }} transition={{ duration: 0.25, ease: EASE }} className="block w-[20px] h-[1.5px] bg-[var(--cream)] origin-center" />
+              <motion.span animate={open ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }} transition={{ duration: 0.25, ease: EASE }}
+                className="block w-5 h-[1.5px] origin-center" style={{ background: "var(--ink)" }} />
+              <motion.span animate={open ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }} transition={{ duration: 0.18 }}
+                className="block w-5 h-[1.5px] origin-center" style={{ background: "var(--ink)" }} />
+              <motion.span animate={open ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }} transition={{ duration: 0.25, ease: EASE }}
+                className="block w-5 h-[1.5px] origin-center" style={{ background: "var(--ink)" }} />
             </button>
           </div>
         </div>
       </motion.header>
 
-      {/* ── FIX #2 & #8: Mobile full-screen OPAQUE overlay ───────────────── */}
-      {/* No backdrop-blur, no transparency — solid navy covering 100vw×100vh */}
+      {/* Mobile overlay */}
       <AnimatePresence>
         {open && (
           <motion.div
-            id="mobile-nav"
-            key="mobile-overlay"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.28, ease: EASE }}
-            className="fixed inset-0 md:hidden flex flex-col"
-            style={{
-              /* FIX #2: fully opaque — no see-through, no bleeding */
-              background: "var(--navy-1)",
-              zIndex: 49,        /* below header (z-50) but above everything else */
-            }}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Navigation"
+            key="mob"
+            initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25, ease: EASE }}
+            className="fixed inset-0 z-40 flex flex-col md:hidden"
+            style={{ background: "var(--bg)" }}
+            role="dialog" aria-modal="true" aria-label="Navigation"
           >
-            {/* Spacer = header height */}
-            <div className="h-[56px] flex-shrink-0" />
+            <div className="h-[60px] flex-shrink-0 border-b" style={{ borderColor: "var(--border)" }} />
 
-            {/* Nav links — FIX #8: generous tap targets, clear spacing */}
             <nav className="flex flex-col flex-1 overflow-y-auto px-6 pt-6 pb-4" aria-label="Mobile navigation">
               {NAV.map(({ label, href, num }, i) => (
-                <motion.a
-                  key={href}
-                  href={href}
-                  initial={{ opacity: 0, x: -16 }}
-                  animate={{ opacity: 1, x: 0 }}
+                <motion.a key={href} href={href}
+                  initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.06 + i * 0.07, ease: EASE }}
                   onClick={e => { e.preventDefault(); close(); scrollTo(href); }}
-                  /* FIX #8: min 60px tap target via py-5 */
                   className="flex items-center gap-5 py-5 border-b"
-                  style={{ borderColor: "rgba(255,255,255,0.07)" }}
+                  style={{ borderColor: "var(--border-2)" }}
                 >
-                  <span className="eyebrow text-[0.58rem] w-6 flex-shrink-0" style={{ color: "var(--gold-dim)" }}>
-                    {num}
-                  </span>
-                  <span className="font-display text-[1.75rem] font-semibold leading-tight transition-colors duration-200"
-                    style={{ color: active === href.slice(1) ? "var(--gold)" : "var(--cream)" }}>
+                  <span className="eyebrow text-[0.58rem] w-6 flex-shrink-0" style={{ color: "var(--gold)" }}>{num}</span>
+                  <span className="font-display text-[1.75rem] font-semibold leading-tight"
+                    style={{ color: active === href.slice(1) ? "var(--gold-dark)" : "var(--ink)" }}>
                     {label}
                   </span>
                 </motion.a>
               ))}
             </nav>
 
-            {/* Bottom CTA */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.36, ease: EASE }}
-              className="px-6 pb-8 pt-5 border-t"
-              style={{ borderColor: "rgba(255,255,255,0.07)" }}
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.34, ease: EASE }}
+              className="px-6 pb-8 pt-5 border-t" style={{ borderColor: "var(--border)" }}
             >
-              <p className="text-sm mb-4 leading-[1.7]" style={{ color: "var(--cream-dim)" }}>
+              <p className="text-sm mb-4 leading-relaxed" style={{ color: "var(--ink-3)" }}>
                 Start with a free 30-minute discovery call — no pitch, no pressure.
               </p>
-              <a
-                href="#contact"
+              <a href="#contact"
                 onClick={e => { e.preventDefault(); close(); scrollTo("#contact"); }}
-                className="flex items-center justify-center gap-2.5 w-full py-4 bg-[var(--gold)] text-[var(--navy)] font-semibold text-sm tracking-wide hover:bg-[var(--gold-bright)] transition-colors duration-300"
+                className="flex items-center justify-center gap-2.5 w-full py-4 font-semibold text-sm tracking-wide transition-colors duration-300"
+                style={{ background: "var(--navy)", color: "var(--white)" }}
               >
                 Book a Consultation
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </a>
-              <p className="eyebrow text-[0.56rem] text-center mt-4" style={{ color: "var(--slate)" }}>
+              <p className="eyebrow text-[0.56rem] text-center mt-4" style={{ color: "var(--ink-light)" }}>
                 A&amp;O Holdings · Affan &amp; Omer
               </p>
             </motion.div>
