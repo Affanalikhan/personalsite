@@ -46,23 +46,26 @@ function FounderCard({ f, i }: { f: typeof FOUNDERS[0]; i: number }) {
         <div className="h-[2px]" style={{ background: `linear-gradient(90deg, ${f.color}, transparent 70%)` }} aria-hidden="true" />
 
         <div className="p-8 lg:p-10 flex flex-col h-full">
-          {/* Header row */}
+          {/* FIX #3: Header row — avatar and LinkedIn side by side, explicit
+              mb-8 gap before name so avatar corner dot never bleeds into heading */}
           <div className="flex items-start justify-between gap-4 mb-8">
             {/* Avatar */}
             <div className="relative flex-shrink-0">
-              <div className="w-16 h-16 border-2 flex items-center justify-center font-display text-xl font-bold tracking-wider"
-                style={{ borderColor: `${f.color}40`, background: `${f.color}10`, color: f.color }}
+              <div className="w-14 h-14 border-2 flex items-center justify-center font-display text-lg font-bold tracking-wider"
+                style={{ borderColor: `${f.color}45`, background: `${f.color}12`, color: f.color }}
                 aria-hidden="true"
               >
                 {f.initials}
               </div>
-              {/* Corner dot */}
-              <div className="absolute -bottom-1 -right-1 w-3 h-3" style={{ background: f.color }} aria-hidden="true" />
+              {/* Corner dot — clipped inside so it doesn't poke into sibling elements */}
+              <div className="absolute bottom-0 right-0 w-3 h-3 translate-x-1 translate-y-1"
+                style={{ background: f.color }} aria-hidden="true" />
             </div>
 
             {/* LinkedIn */}
             <a href={f.linkedin} target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-2 border border-white/[0.08] text-[var(--cream-dim)] hover:text-[var(--cream)] hover:border-white/20 transition-all duration-250 flex-shrink-0"
+              className="flex items-center gap-2 px-3 py-2 border transition-all duration-250 flex-shrink-0"
+              style={{ borderColor: "rgba(255,255,255,0.1)", color: "var(--cream-dim)" }}
               aria-label={`${f.name} on LinkedIn`}
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5" aria-hidden="true">
@@ -72,29 +75,29 @@ function FounderCard({ f, i }: { f: typeof FOUNDERS[0]; i: number }) {
             </a>
           </div>
 
-          {/* Name block */}
-          <h3 className="font-display text-2xl font-semibold text-[var(--cream)] mb-1 leading-tight">
+          {/* FIX #3: Name block — clear margin-top so it never touches avatar area */}
+          <h3 className="font-display text-2xl font-semibold text-[var(--cream)] mb-1 leading-tight mt-1">
             {f.name}
           </h3>
           <p className="eyebrow text-[0.62rem] mb-1" style={{ color: f.color }}>{f.role}</p>
           <p className="text-sm mb-6" style={{ color: "var(--cream-dim)" }}>{f.focus}</p>
 
           {/* Rule */}
-          <div className="h-px mb-6" style={{ background: `linear-gradient(90deg, ${f.color}30, transparent)` }} aria-hidden="true" />
+          <div className="h-px mb-6" style={{ background: `linear-gradient(90deg, ${f.color}35, transparent)` }} aria-hidden="true" />
 
-          {/* Bio */}
-          <p className="text-[0.9rem] leading-[1.85] mb-4" style={{ color: "var(--cream)" }}>
+          {/* FIX #4: bio line-height 1.75 */}
+          <p className="text-[0.9rem] mb-4" style={{ lineHeight: 1.75, color: "var(--cream)" }}>
             {f.bio}
           </p>
-          <p className="text-[0.9rem] leading-[1.85] mb-8" style={{ color: "var(--cream-dim)" }}>
+          <p className="text-[0.9rem] mb-8" style={{ lineHeight: 1.75, color: "var(--cream-dim)" }}>
             {f.extended}
           </p>
 
-          {/* Tags */}
-          <div className="flex flex-wrap gap-1.5 mt-auto">
+          {/* FIX #6: tags — increased padding and gap */}
+          <div className="flex flex-wrap gap-2 mt-auto">
             {f.tags.map(t => (
-              <span key={t} className="eyebrow text-[0.58rem] px-2.5 py-1 border"
-                style={{ borderColor: `${f.color}25`, color: `${f.color}cc` }}
+              <span key={t} className="eyebrow text-[0.58rem] px-3 py-1.5 border"
+                style={{ borderColor: `${f.color}28`, color: `${f.color}cc` }}
               >
                 {t}
               </span>

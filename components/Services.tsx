@@ -99,7 +99,7 @@ function Accordion({ name, body, color }: { name: string; body: string; color: s
             transition={{ duration: 0.3, ease: EASE }}
             className="overflow-hidden"
           >
-            <p className="pb-6 pr-8 text-sm leading-[1.85]" style={{ color: "var(--cream-dim)" }}>{body}</p>
+            <p className="pb-6 pr-4 sm:pr-8 text-sm" style={{ lineHeight: 1.8, color: "var(--cream-dim)" }}>{body}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -146,9 +146,9 @@ function PillarCard({ p, active, onClick, i }: { p: typeof PILLARS[0]; active: b
 
         {/* Footer */}
         <div className="flex items-center justify-between">
-          <span className="eyebrow text-[0.6rem] px-2 py-1 border transition-all duration-350"
+          <span className="eyebrow text-[0.6rem] px-3 py-1.5 border transition-all duration-350"
             style={{
-              borderColor: active ? `${p.color}50` : "rgba(255,255,255,0.1)",
+              borderColor: active ? `${p.color}50` : "rgba(255,255,255,0.12)",
               color: active ? p.color : "var(--slate)",
             }}
           >
@@ -198,8 +198,8 @@ export default function Services() {
           <motion.h2 id="services-h2"
             initial={{ opacity: 0, y: 20 }} animate={headInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.75, delay: 0.1, ease: EASE }}
-            className="font-display font-bold leading-[1.1] mb-5"
-            style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}
+            className="font-display font-bold leading-[1.12] mb-5"
+            style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)" }}
           >
             Intelligence built{" "}
             <span className="font-serif font-light italic" style={{ color: "var(--gold)" }}>for the real world.</span>
@@ -216,8 +216,8 @@ export default function Services() {
           </motion.p>
         </div>
 
-        {/* Pillar cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+        {/* Pillar cards — FIX #7: clear gap, each card has defined border */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           {PILLARS.map((p, i) => (
             <PillarCard key={p.id} p={p} active={active === p.id} onClick={() => {
               setActive(p.id);
@@ -226,8 +226,8 @@ export default function Services() {
           ))}
         </div>
 
-        {/* Detail panel */}
-        <div ref={panelRef}>
+        {/* Detail panel — FIX #5: mt-6 breathing room from cards */}
+        <div ref={panelRef} className="mt-6">
           <AnimatePresence mode="wait">
             <motion.div
               key={current.id}

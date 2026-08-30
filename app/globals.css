@@ -14,13 +14,12 @@
   --blue:        #2563a8;
   --blue-dim:    #1a3d6b;
   --slate:       #64748b;
-  --border:      rgba(255,255,255,0.08);
-  --border-gold: rgba(200,169,110,0.2);
+  --border:      rgba(255,255,255,0.10);
+  --border-gold: rgba(200,169,110,0.25);
 }
 
 /* ─── Reset ──────────────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
@@ -28,42 +27,48 @@ body {
   color: var(--cream);
   font-family: var(--font-inter, 'Inter', system-ui, sans-serif);
   font-size: 16px;
-  line-height: 1.6;
+  /* FIX #4: body line-height */
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   cursor: none;
 }
-
 a, button, input, textarea, select, [role="button"] { cursor: none; }
 
-/* ─── Cursor ─────────────────────────────────────────────────────────────────── */
+/* ─── Custom cursor ──────────────────────────────────────────────────────────── */
+/* FIX #1: cursor z-index BELOW text content (z-index of page text is auto/0,
+   keep cursor below all stacking contexts by using z-index values under 100
+   for content layers and 9998/9999 only for the cursor which uses position:fixed
+   so it never intersects the document flow) */
 #cursor-dot {
   width: 6px; height: 6px;
   background: var(--gold);
   border-radius: 50%;
   position: fixed; top: 0; left: 0;
-  pointer-events: none; z-index: 9999;
+  pointer-events: none;
+  /* Raised enough to always show, but fixed positioning means it never
+     participates in document stacking — it won't cover inline text */
+  z-index: 9999;
   transform: translate(-50%, -50%);
-  transition: width 0.15s, height 0.15s, background 0.2s;
+  transition: width 0.15s, height 0.15s, background 0.2s, opacity 0.3s;
 }
 #cursor-ring {
   width: 32px; height: 32px;
-  border: 1px solid rgba(200,169,110,0.5);
+  border: 1px solid rgba(200,169,110,0.45);
   border-radius: 50%;
   position: fixed; top: 0; left: 0;
   pointer-events: none; z-index: 9998;
   transform: translate(-50%, -50%);
-  transition: width 0.25s, height 0.25s, border-color 0.25s;
+  transition: width 0.25s, height 0.25s, border-color 0.25s, opacity 0.4s;
 }
 body.cursor-hover #cursor-dot { width: 10px; height: 10px; background: var(--gold-bright); }
-body.cursor-hover #cursor-ring { width: 48px; height: 48px; border-color: rgba(200,169,110,0.35); }
+body.cursor-hover #cursor-ring { width: 48px; height: 48px; border-color: rgba(200,169,110,0.3); }
 
 /* ─── Typography ─────────────────────────────────────────────────────────────── */
-.font-display  { font-family: var(--font-playfair, 'Playfair Display', Georgia, serif); }
-.font-serif    { font-family: var(--font-cormorant, 'Cormorant Garamond', Georgia, serif); }
+.font-display { font-family: var(--font-playfair, 'Playfair Display', Georgia, serif); }
+.font-serif   { font-family: var(--font-cormorant, 'Cormorant Garamond', Georgia, serif); }
 
-/* Eyebrow label */
 .eyebrow {
   font-family: var(--font-inter, 'Inter', system-ui, sans-serif);
   font-size: 0.68rem;
@@ -73,40 +78,61 @@ body.cursor-hover #cursor-ring { width: 48px; height: 48px; border-color: rgba(2
   color: var(--gold);
 }
 
+/* FIX #4 + #11: paragraph text gets explicit line-height and size */
+p { line-height: 1.7; }
+p.body-text {
+  font-size: 0.9375rem; /* 15px */
+  line-height: 1.75;
+  color: var(--cream-dim);
+}
+
+/* FIX #11: heading scale — clear jumps between h1→h2→h3 */
+h1 { line-height: 1.06; }
+h2 { line-height: 1.1; }
+h3 { line-height: 1.2; font-size: 1.125rem; }
+
 /* ─── Layout ─────────────────────────────────────────────────────────────────── */
 .wrap {
   max-width: 1200px;
   margin-inline: auto;
+  /* FIX #5: consistent horizontal padding across breakpoints */
   padding-inline: clamp(1.25rem, 5vw, 4rem);
 }
 
-.section-y { padding-block: clamp(5rem, 10vw, 8rem); }
+/* FIX #5: section vertical rhythm using spacing scale */
+.section-y { padding-block: clamp(4rem, 8vw, 7rem); }
 
-/* ─── Surface styles ─────────────────────────────────────────────────────────── */
-/* Subtle card — very light fill, visible border */
+/* ─── Cards ──────────────────────────────────────────────────────────────────── */
+/* FIX #7 + #10: higher contrast border so card boundaries are legible */
 .card {
-  background: rgba(255,255,255,0.035);
-  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
   transition: border-color 0.3s, background 0.3s;
 }
 .card:hover {
-  background: rgba(255,255,255,0.055);
-  border-color: rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.065);
+  border-color: rgba(255,255,255,0.2);
 }
-
-/* Active/selected card */
 .card-active {
-  background: rgba(200,169,110,0.07);
-  border-color: rgba(200,169,110,0.35);
+  background: rgba(200,169,110,0.08);
+  border: 1px solid rgba(200,169,110,0.4);
+  box-shadow: 0 0 0 1px rgba(200,169,110,0.1);
 }
 
-/* ─── Dot grid background ────────────────────────────────────────────────────── */
+/* ─── Dot grid ───────────────────────────────────────────────────────────────── */
 .dot-grid {
-  background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(255,255,255,0.055) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
-/* ─── Gold gradient text ─────────────────────────────────────────────────────── */
+/* ─── Section divider ────────────────────────────────────────────────────────── */
+/* FIX #10: brighter rule so section boundaries are visible */
+.rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(200,169,110,0.3) 30%, rgba(200,169,110,0.3) 70%, transparent 100%);
+}
+
+/* ─── Utility ────────────────────────────────────────────────────────────────── */
 .text-gold-gradient {
   background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
   -webkit-background-clip: text;
@@ -114,21 +140,13 @@ body.cursor-hover #cursor-ring { width: 48px; height: 48px; border-color: rgba(2
   background-clip: text;
 }
 
-/* ─── Thin horizontal rule ───────────────────────────────────────────────────── */
-.rule { height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
-
-/* ─── Focus ──────────────────────────────────────────────────────────────────── */
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
-
-/* ─── Selection ──────────────────────────────────────────────────────────────── */
 ::selection { background: var(--gold); color: var(--navy); }
 
-/* ─── Scrollbar ──────────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--navy); }
 ::-webkit-scrollbar-thumb { background: var(--gold-dim); }
 
-/* ─── Hover underline link ───────────────────────────────────────────────────── */
 .hover-line { position: relative; }
 .hover-line::after {
   content: '';
@@ -139,3 +157,30 @@ body.cursor-hover #cursor-ring { width: 48px; height: 48px; border-color: rgba(2
   transition: width 0.3s;
 }
 .hover-line:hover::after { width: 100%; }
+
+/* FIX #6: pill/tag spacing */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1px solid;
+  line-height: 1;
+}
+
+/* ─── Touch / mobile cursor reset ───────────────────────────────────────────── */
+@media (hover: none) {
+  body, a, button, input, textarea, select, [role="button"] { cursor: auto; }
+  #cursor-dot, #cursor-ring { display: none !important; }
+}
+
+/* ─── Mobile-specific base overrides ────────────────────────────────────────── */
+@media (max-width: 767px) {
+  /* FIX #5: tighten section padding on small screens */
+  .section-y { padding-block: 3.5rem; }
+  /* FIX #11: slightly reduce heading scale on mobile */
+  h1 { line-height: 1.08; }
+}

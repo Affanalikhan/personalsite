@@ -79,7 +79,7 @@ export default function Contact() {
           </motion.h2>
 
           <motion.p initial={{ opacity: 0, y: 14 }} animate={headInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.65, delay: 0.18 }}
-            className="text-[0.95rem] leading-[1.8] max-w-lg" style={{ color: "var(--cream-dim)" }}
+            className="text-[0.9375rem] max-w-lg" style={{ lineHeight: 1.75, color: "var(--cream-dim)" }}
           >
             Start with a free 30-minute discovery call — no pitch, no obligation. We&apos;ll ask
             questions, understand your situation, and tell you honestly whether and how

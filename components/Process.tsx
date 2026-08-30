@@ -50,7 +50,7 @@ function Step({ s, i }: { s: typeof STEPS[0]; i: number }) {
     <motion.div ref={ref}
       initial={{ opacity: 0, x: 24 }} animate={inView ? { opacity: 1, x: 0 } : {}}
       transition={{ duration: 0.7, delay: i * 0.1, ease: EASE }}
-      className={`flex gap-6 pb-10 relative ${s.optional ? "opacity-60" : ""}`}
+      className={`flex gap-6 pb-12 relative ${s.optional ? "opacity-60" : ""}`}
     >
       {/* Connector */}
       {i < STEPS.length - 1 && (
@@ -83,10 +83,11 @@ function Step({ s, i }: { s: typeof STEPS[0]; i: number }) {
             <span className="eyebrow text-[0.55rem] px-2 py-0.5 border border-white/10 text-[var(--slate)]">Optional</span>
           )}
         </div>
-        <p className="font-serif italic text-[0.95rem] mb-3" style={{ color: "var(--gold)", fontWeight: 300 }}>
+        <p className="font-serif italic text-[0.95rem] mb-3" style={{ color: "var(--gold)", fontWeight: 300, lineHeight: 1.5 }}>
           {s.sub}
         </p>
-        <p className="text-sm leading-[1.8]" style={{ color: "var(--cream-dim)" }}>{s.body}</p>
+        {/* FIX #4: explicit line-height on body */}
+        <p className="text-sm" style={{ lineHeight: 1.8, color: "var(--cream-dim)" }}>{s.body}</p>
       </div>
     </motion.div>
   );
