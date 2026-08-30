@@ -63,6 +63,28 @@ const PILLARS = [
       },
     ],
   },
+  {
+    id: "product",
+    num: "04",
+    label: "Product & Strategy",
+    tagline: "Shape what gets built and why.",
+    description: "Great execution on the wrong product is still a failure. We work with companies to define what to build, validate it early, and ensure product direction is grounded in business reality — not just technical possibility. From zero-to-one discovery through to ongoing product management, we bring structure and commercial judgement to product decisions.",
+    color: "#6d8a6e",
+    services: [
+      {
+        name: "Product Development & Management",
+        body: "We scope, prioritise, and drive product development — from initial discovery and requirements definition through to delivery management and iteration. This includes roadmap ownership, sprint planning, stakeholder alignment, and the ongoing judgment calls that determine whether a product actually ships and succeeds.",
+      },
+      {
+        name: "Business Analysis & Insight",
+        body: "Structured analysis of business problems, processes, and opportunities — translating complex operational realities into clear requirements, decision frameworks, and actionable recommendations. Useful as a standalone engagement before a technical build, or as a continuous input into product and strategy decisions.",
+      },
+      {
+        name: "Strategic Advisory",
+        body: "Engagement-level strategic input for leadership teams navigating major decisions: entering a new market, repositioning a product, evaluating a technology investment, or restructuring a commercial operation. We bring an outside perspective grounded in real delivery experience — not slides from a methodology playbook.",
+      },
+    ],
+  },
 ];
 
 function Accordion({ name, body, color }: { name: string; body: string; color: string }) {
@@ -210,14 +232,14 @@ export default function Services() {
             transition={{ duration: 0.65, delay: 0.18 }}
             className="text-[1rem] leading-[1.75]" style={{ color: "var(--cream-dim)" }}
           >
-            Three service pillars designed to compound — data insights sharpen AI strategy,
-            AI strategy drives automation, automation frees your team to grow.
-            We work across all three, or go deep on one.
+            Four service pillars — data intelligence, AI enablement, commercial growth,
+            and product strategy. Each one distinct, each one designed to compound
+            on the others. We work across all four, or go deep on one.
           </motion.p>
         </div>
 
         {/* Pillar cards — FIX #7: clear gap, each card has defined border */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {PILLARS.map((p, i) => (
             <PillarCard key={p.id} p={p} active={active === p.id} onClick={() => {
               setActive(p.id);

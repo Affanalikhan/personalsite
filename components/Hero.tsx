@@ -7,7 +7,7 @@ import { EASE } from "@/lib/motion";
 const TICKER = [
   "Predictive Modeling", "Agentic AI Systems", "AI-Powered Web",
   "Business Automation", "AI Strategy Advisory", "Data Intelligence",
-  "Contract Acquisition", "Independent Consulting",
+  "Product Management", "Contract Acquisition", "Independent Consulting",
 ];
 
 function NetworkSVG() {
@@ -115,7 +115,7 @@ export default function Hero() {
           className="flex items-center gap-3 mb-6"
         >
           <span className="w-8 h-px bg-[var(--gold)] flex-shrink-0" aria-hidden="true" />
-          <span className="eyebrow">Independent AI &amp; Data Consultancy</span>
+          <span className="eyebrow">Independent Consultancy</span>
         </motion.div>
 
         {/* Headline
@@ -144,10 +144,11 @@ export default function Hero() {
           className="max-w-[30rem] mb-9"
           style={{ fontSize: "0.9375rem", lineHeight: 1.75, color: "var(--cream-dim)" }}
         >
-          A&amp;O Holdings is a founder-led consulting firm. We work directly
-          with companies to deploy predictive intelligence, build agentic AI
-          systems, and drive business growth — no account managers, no
-          junior delivery teams.
+          A&amp;O Holdings is a founder-led consultancy. We work directly
+          with companies across data science, AI systems, product strategy,
+          and commercial growth — deploying predictive models, building
+          agentic AI, shaping product direction, and driving pipeline — no
+          account managers, no junior delivery teams.
         </motion.p>
 
         {/* CTAs */}
