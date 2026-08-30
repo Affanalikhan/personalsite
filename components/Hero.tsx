@@ -193,25 +193,30 @@ export default function Hero() {
             <GeometricDecor />
           </motion.div>
 
-          {/* Floating tag pills */}
+          {/* Floating tag pills — 8 capabilities arranged across the panel */}
           {[
-            { label: "Data Science",    top: "14%", left: "8%"  },
-            { label: "Agentic AI",      top: "22%", right: "6%" },
-            { label: "Product Strategy",bottom: "28%", left: "5%"},
-            { label: "Commercial Growth",bottom:"20%", right:"4%"},
-          ].map(({ label, ...pos }) => (
+            { label: "Data Science",         top: "10%",  left: "6%"   },
+            { label: "Agentic AI",           top: "10%",  right: "5%"  },
+            { label: "Predictive Modeling",  top: "28%",  left: "3%"   },
+            { label: "AI Automation",        top: "28%",  right: "3%"  },
+            { label: "Product Strategy",     top: "50%",  left: "5%"   },
+            { label: "Web Development",      top: "50%",  right: "4%"  },
+            { label: "Commercial Growth",    top: "70%",  left: "7%"   },
+            { label: "Business Analysis",    top: "70%",  right: "5%"  },
+          ].map(({ label, ...pos }, idx) => (
             <motion.div
               key={label}
-              initial={{ opacity: 0, scale: .9 }}
+              initial={{ opacity: 0, scale: .88 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: .6 + Math.random() * .4, duration: .5 }}
-              className="absolute t-eyebrow text-[11px] px-3 py-2"
+              transition={{ delay: .55 + idx * .08, duration: .45, ease: EASE }}
+              className="absolute t-eyebrow text-[10px] px-3 py-2"
               style={{
                 ...pos,
                 border: "1px solid var(--gold)",
                 background: "var(--ivory)",
                 color: "var(--charcoal)",
-                letterSpacing: ".14em",
+                letterSpacing: ".13em",
+                whiteSpace: "nowrap",
               }}
             >
               {label}

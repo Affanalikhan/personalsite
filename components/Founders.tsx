@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 import { EASE } from "@/lib/motion";
 
 const FOUNDERS = [
@@ -9,10 +10,10 @@ const FOUNDERS = [
     name: "Affan Ali Khan",
     role: "Co-Founder",
     focus: "Data Science & AI Architecture",
-    initial: "A",
+    photo: "/affanalikhan.jpeg",
     bio: "Affan leads the technical side of A&O Holdings. His work sits at the intersection of data science and AI systems engineering — building predictive models that inform high-stakes business decisions and designing multi-agent AI frameworks that operate inside real workflows.",
     extended: "He takes a problem-first approach to every engagement: the right technical solution only becomes clear after you fully understand what the business is actually trying to achieve. Affan has experience across the full data science lifecycle — problem framing, feature engineering, model development, MLOps, and deployment — and brings the same rigour to agentic AI architecture and AI-native web development.",
-    linkedin: "https://linkedin.com/in/affan-ali-khan",
+    linkedin: "https://www.linkedin.com/in/affan-ali-khan-679a27249/",
     tags: ["Predictive Modeling", "Agentic AI", "ML Engineering", "AI-Powered Web"],
     accent: "#1e40af",
   },
@@ -20,10 +21,10 @@ const FOUNDERS = [
     name: "Mohammed Omer Khan",
     role: "Co-Founder",
     focus: "Commercial Strategy & AI Enablement",
-    initial: "O",
+    photo: "/mohammedomerkhan.jpeg",
     bio: "Omer leads the commercial and strategic side of A&O Holdings — client relationships, business development, and the translation of AI capability into business value. He has a sharp instinct for where AI creates genuine advantage versus where it's a distraction.",
     extended: "He runs engagements spanning AI strategy advisory, workflow automation, contract acquisition, and sales infrastructure. Every recommendation is tested against ROI, feasibility, and what the client's team can actually sustain long-term.",
-    linkedin: "https://linkedin.com/in/mohammed-omer-khan",
+    linkedin: "https://www.linkedin.com/in/mohammedomer112/",
     tags: ["AI Strategy", "Business Development", "AI Automation", "Contract Acquisition"],
     accent: "var(--gold)",
   },
@@ -66,22 +67,22 @@ function FounderCard({ f, i }: { f: typeof FOUNDERS[0]; i: number }) {
             borderRight: "1px solid rgba(255,255,255,.07)",
           }}
         >
-          {/* Avatar circle */}
+          {/* Photo */}
           <div style={{
-            width: "96px", height: "96px",
+            width: "120px", height: "120px",
             border: `2px solid ${f.accent}`,
-            display: "flex", alignItems: "center", justifyContent: "center",
-            background: "rgba(255,255,255,.04)",
+            overflow: "hidden",
+            flexShrink: 0,
             marginBottom: "var(--s-8)",
+            position: "relative",
           }}>
-            <span style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: "40px",
-              fontWeight: 700,
-              color: f.accent,
-            }} aria-hidden="true">
-              {f.initial}
-            </span>
+            <Image
+              src={f.photo}
+              alt={`Photo of ${f.name}`}
+              fill
+              style={{ objectFit: "cover", objectPosition: "top" }}
+              sizes="120px"
+            />
           </div>
 
           <div>
