@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { EASE } from "@/lib/motion";
 
 const FOUNDERS = [
@@ -9,114 +9,94 @@ const FOUNDERS = [
     name: "Affan Ali Khan",
     role: "Co-Founder",
     focus: "Data Science & AI Architecture",
-    bio: "Affan leads the technical side of A&O Holdings. His work sits at the intersection of data science and AI systems engineering — from building predictive models that inform high-stakes business decisions, to designing multi-agent AI frameworks that operate inside real workflows.",
-    extended:
-      "He takes a problem-first approach to every engagement: the right technical solution only becomes clear after you fully understand what the business is actually trying to achieve. Affan has experience across the full data science lifecycle — problem framing, feature engineering, model development, MLOps, and deployment — and brings the same rigour to agentic AI architecture and AI-native web development. He believes the best technical work is the kind that becomes invisible: it just makes the business run better.",
+    bio: "Affan leads the technical side of A&O Holdings. His work sits at the intersection of data science and AI systems engineering — building predictive models that inform high-stakes business decisions and designing multi-agent AI frameworks that operate inside real workflows.",
+    extended: "He takes a problem-first approach to every engagement: the right technical solution only becomes clear after you fully understand what the business is actually trying to achieve. Affan has experience across the full data science lifecycle — problem framing, feature engineering, model development, MLOps, and deployment — and brings the same rigour to agentic AI architecture and AI-native web development.",
     linkedin: "https://linkedin.com/in/affan-ali-khan",
     initials: "AK",
-    accentColor: "#1e4d8c",
+    color: "#2563a8",
     tags: ["Predictive Modeling", "Agentic AI", "ML Engineering", "AI-Powered Web"],
   },
   {
     name: "Mohammed Omer Khan",
     role: "Co-Founder",
     focus: "Commercial Strategy & AI Enablement",
-    bio: "Omer leads the commercial and strategic side of A&O Holdings. He owns client relationships, business development, and the translation of AI capability into business value — and has a sharp instinct for where AI creates genuine advantage versus where it's a distraction.",
-    extended:
-      "He runs engagements spanning AI strategy advisory, workflow automation, contract acquisition, and sales infrastructure. His approach is direct and grounded in commercial reality: every recommendation is tested against ROI, feasibility, and what the client's team can actually sustain long-term. Omer is the reason clients understand what they're getting before a single line of code is written — and the reason they come back when the next problem surfaces.",
+    bio: "Omer leads the commercial and strategic side of A&O Holdings — client relationships, business development, and the translation of AI capability into business value. He has a sharp instinct for where AI creates genuine advantage versus where it's a distraction.",
+    extended: "He runs engagements spanning AI strategy advisory, workflow automation, contract acquisition, and sales infrastructure. His approach is direct and commercially grounded: every recommendation is tested against ROI, feasibility, and what the client's team can actually sustain. Omer is the reason clients understand exactly what they're getting before a single line of code is written.",
     linkedin: "https://linkedin.com/in/mohammed-omer-khan",
     initials: "OK",
-    accentColor: "#c9a84c",
+    color: "#c8a96e",
     tags: ["AI Strategy", "Business Development", "AI Automation", "Contract Acquisition"],
   },
 ];
 
-function FounderCard({ founder, index }: { founder: (typeof FOUNDERS)[0]; index: number }) {
+function FounderCard({ f, i }: { f: typeof FOUNDERS[0]; i: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <motion.article
-      ref={ref}
-      initial={{ opacity: 0, y: 44 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.9, delay: index * 0.16, ease: EASE }}
+    <motion.article ref={ref}
+      initial={{ opacity: 0, y: 40 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.85, delay: i * 0.15, ease: EASE }}
+      className="h-full"
     >
-      <div className="border border-white/[0.07] overflow-hidden transition-all duration-500 hover:border-white/[0.12] hover:shadow-[0_0_50px_rgba(201,168,76,0.04)] h-full"
-        style={{ background: `linear-gradient(160deg, ${founder.accentColor}06 0%, transparent 50%)` }}
+      <div className="h-full border border-white/[0.08] overflow-hidden transition-all duration-400 hover:border-white/[0.15]"
+        style={{ background: `linear-gradient(160deg, ${f.color}08 0%, rgba(255,255,255,0.02) 60%, transparent 100%)` }}
       >
         {/* Top accent */}
-        <div
-          className="h-[2px]"
-          style={{ background: `linear-gradient(90deg, ${founder.accentColor}, ${founder.accentColor}20)` }}
-          aria-hidden="true"
-        />
+        <div className="h-[2px]" style={{ background: `linear-gradient(90deg, ${f.color}, transparent 70%)` }} aria-hidden="true" />
 
-        <div className="p-8 lg:p-10">
-          {/* Header */}
-          <div className="flex items-start justify-between gap-4 mb-7">
+        <div className="p-8 lg:p-10 flex flex-col h-full">
+          {/* Header row */}
+          <div className="flex items-start justify-between gap-4 mb-8">
+            {/* Avatar */}
             <div className="relative flex-shrink-0">
-              <div
-                className="w-14 h-14 flex items-center justify-center border font-display text-base font-bold tracking-widest"
-                style={{
-                  borderColor: `${founder.accentColor}45`,
-                  background: `linear-gradient(135deg, ${founder.accentColor}15, ${founder.accentColor}05)`,
-                  color: founder.accentColor,
-                }}
+              <div className="w-16 h-16 border-2 flex items-center justify-center font-display text-xl font-bold tracking-wider"
+                style={{ borderColor: `${f.color}40`, background: `${f.color}10`, color: f.color }}
                 aria-hidden="true"
               >
-                {founder.initials}
+                {f.initials}
               </div>
-              <div
-                className="absolute -bottom-1 -right-1 w-3 h-3"
-                style={{ background: founder.accentColor, opacity: 0.75 }}
-                aria-hidden="true"
-              />
+              {/* Corner dot */}
+              <div className="absolute -bottom-1 -right-1 w-3 h-3" style={{ background: f.color }} aria-hidden="true" />
             </div>
 
-            <a
-              href={founder.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-[0.6rem] font-semibold tracking-[0.15em] uppercase text-[var(--mist)] hover:text-[var(--cream)] transition-colors duration-300 border border-white/[0.08] px-3 py-2 hover:border-[var(--gold)]/30 mt-0.5"
-              aria-label={`${founder.name} on LinkedIn`}
+            {/* LinkedIn */}
+            <a href={f.linkedin} target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-2 px-3 py-2 border border-white/[0.08] text-[var(--cream-dim)] hover:text-[var(--cream)] hover:border-white/20 transition-all duration-250 flex-shrink-0"
+              aria-label={`${f.name} on LinkedIn`}
             >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5" aria-hidden="true">
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
               </svg>
-              LinkedIn
+              <span className="eyebrow text-[0.6rem]">LinkedIn</span>
             </a>
           </div>
 
-          {/* Name */}
-          <h3 className="font-display text-[1.4rem] font-semibold text-[var(--cream)] mb-0.5 leading-tight">
-            {founder.name}
+          {/* Name block */}
+          <h3 className="font-display text-2xl font-semibold text-[var(--cream)] mb-1 leading-tight">
+            {f.name}
           </h3>
-          <p className="text-[0.6rem] font-semibold tracking-[0.18em] uppercase mb-1" style={{ color: founder.accentColor }}>
-            {founder.role}
-          </p>
-          <p className="text-[var(--mist)] text-xs mb-6">{founder.focus}</p>
+          <p className="eyebrow text-[0.62rem] mb-1" style={{ color: f.color }}>{f.role}</p>
+          <p className="text-sm mb-6" style={{ color: "var(--cream-dim)" }}>{f.focus}</p>
 
-          {/* Divider */}
-          <div className="h-px mb-6" style={{ background: `linear-gradient(90deg, ${founder.accentColor}35, transparent)` }} aria-hidden="true" />
+          {/* Rule */}
+          <div className="h-px mb-6" style={{ background: `linear-gradient(90deg, ${f.color}30, transparent)` }} aria-hidden="true" />
 
           {/* Bio */}
-          <p className="text-[var(--cream)]/80 text-sm leading-[1.85] mb-4">
-            {founder.bio}
+          <p className="text-[0.9rem] leading-[1.85] mb-4" style={{ color: "var(--cream)" }}>
+            {f.bio}
           </p>
-          <p className="text-[var(--mist)] text-sm leading-[1.85] mb-7">
-            {founder.extended}
+          <p className="text-[0.9rem] leading-[1.85] mb-8" style={{ color: "var(--cream-dim)" }}>
+            {f.extended}
           </p>
 
           {/* Tags */}
-          <div className="flex flex-wrap gap-2">
-            {founder.tags.map((tag) => (
-              <span
-                key={tag}
-                className="text-[0.55rem] font-semibold tracking-[0.12em] uppercase px-2.5 py-1 border"
-                style={{ borderColor: `${founder.accentColor}28`, color: `${founder.accentColor}bb` }}
+          <div className="flex flex-wrap gap-1.5 mt-auto">
+            {f.tags.map(t => (
+              <span key={t} className="eyebrow text-[0.58rem] px-2.5 py-1 border"
+                style={{ borderColor: `${f.color}25`, color: `${f.color}cc` }}
               >
-                {tag}
+                {t}
               </span>
             ))}
           </div>
@@ -127,104 +107,75 @@ function FounderCard({ founder, index }: { founder: (typeof FOUNDERS)[0]; index:
 }
 
 export default function Founders() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const headingRef = useRef<HTMLDivElement>(null);
-  const headingInView = useInView(headingRef, { once: true, margin: "-60px" });
-
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-  const bgY = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
+  const headRef = useRef<HTMLDivElement>(null);
+  const headInView = useInView(headRef, { once: true, margin: "-60px" });
 
   return (
-    <section
-      id="founders"
-      ref={sectionRef}
-      className="relative section-transition overflow-hidden"
-      style={{ background: "linear-gradient(180deg, #081220 0%, #060f1c 50%, #0a1628 100%)" }}
-      aria-labelledby="founders-heading"
+    <section id="founders" aria-labelledby="founders-h2"
+      className="relative overflow-hidden"
+      style={{ background: "linear-gradient(180deg, #091422 0%, #07111d 100%)" }}
     >
-      <motion.div
-        style={{ y: bgY }}
-        className="absolute left-[-2%] top-1/2 -translate-y-1/2 font-display text-[16vw] font-bold text-white/[0.016] leading-none select-none pointer-events-none whitespace-nowrap"
-        aria-hidden="true"
-      >
-        FOUNDERS
-      </motion.div>
+      {/* Subtle glow */}
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" aria-hidden="true" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] pointer-events-none"
+        style={{ background: "radial-gradient(ellipse at top, rgba(37,99,168,0.1) 0%, transparent 65%)" }} aria-hidden="true" />
+      <div className="absolute inset-0 dot-grid opacity-40 pointer-events-none" aria-hidden="true" />
 
-      <div className="absolute inset-0 grid-lines opacity-25 pointer-events-none" aria-hidden="true" />
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at top, rgba(30,77,140,0.12) 0%, transparent 70%)" }}
-        aria-hidden="true"
-      />
-
-      <div className="section-pad container-site relative z-10">
+      <div className="wrap section-y relative z-10">
 
         {/* Header */}
-        <div ref={headingRef} className="mb-14 max-w-2xl">
-          <motion.p
-            initial={{ opacity: 0, y: 18 }} animate={headingInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="text-eyebrow mb-5 flex items-center gap-3"
+        <div ref={headRef} className="mb-14 max-w-2xl">
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={headInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }}
+            className="flex items-center gap-3 mb-5"
           >
-            <span className="inline-block w-8 h-px bg-[var(--gold)]" />
-            The Team
-          </motion.p>
+            <span className="w-8 h-px bg-[var(--gold)]" />
+            <span className="eyebrow">The Team</span>
+          </motion.div>
 
-          <motion.h2
-            id="founders-heading"
-            initial={{ opacity: 0, y: 24 }} animate={headingInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
-            className="font-display text-4xl sm:text-5xl font-bold leading-tight mb-5"
+          <motion.h2 id="founders-h2"
+            initial={{ opacity: 0, y: 20 }} animate={headInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.75, delay: 0.1, ease: EASE }}
+            className="font-display font-bold leading-[1.1] mb-5"
+            style={{ fontSize: "clamp(1.9rem, 3.5vw, 2.75rem)" }}
           >
             Two founders.{" "}
-            <span style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontStyle: "italic", fontWeight: 300, color: "var(--gold)" }}>
-              One shared conviction.
-            </span>
+            <span className="font-serif font-light italic" style={{ color: "var(--gold)" }}>One shared conviction.</span>
           </motion.h2>
 
-          <motion.p
-            initial={{ opacity: 0, y: 16 }} animate={headingInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-[var(--mist)] leading-[1.8] text-[0.95rem]"
+          <motion.p initial={{ opacity: 0, y: 14 }} animate={headInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.65, delay: 0.18 }}
+            className="text-[0.95rem] leading-[1.8]" style={{ color: "var(--cream-dim)" }}
           >
-            A&amp;O Holdings is founder-led in the truest sense: both founders work
-            directly on client engagements. When you work with us, you get senior
-            expertise on every deliverable — not a junior team working off a template
-            while the founders are busy selling the next project.
+            A&amp;O Holdings is founder-led in the truest sense: both founders work directly
+            on client engagements. When you work with us, you get senior expertise on every
+            deliverable — not a junior team operating off a template.
           </motion.p>
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {FOUNDERS.map((founder, i) => (
-            <FounderCard key={founder.name} founder={founder} index={i} />
-          ))}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          {FOUNDERS.map((f, i) => <FounderCard key={f.name} f={f} i={i} />)}
         </div>
 
-        {/* Quote */}
+        {/* Quote block */}
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="mt-14 pt-10 border-t border-[var(--gold)]/8 max-w-xl"
+          className="mt-16 pt-12 border-t border-white/[0.06] max-w-2xl"
         >
-          <p
-            className="text-[var(--cream)]/65 leading-[1.9] mb-4"
-            style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.15rem", fontStyle: "italic" }}
-          >
-            &ldquo;We started A&amp;O because we kept seeing the same pattern: companies
-            spending significant budget on AI and data projects that didn&apos;t move
-            the needle — not because the technology failed, but because no one had
-            properly identified the right problem to solve in the first place. That&apos;s
-            the gap we fill.&rdquo;
+          <p className="font-serif italic leading-[1.9] mb-5 text-[1.1rem]" style={{ color: "var(--cream-dim)" }}>
+            &ldquo;We started A&amp;O because we kept seeing the same pattern: companies spending
+            significant budget on AI projects that didn&apos;t move the needle — not because
+            the technology failed, but because no one had properly identified the right
+            problem to solve in the first place. That&apos;s the gap we fill.&rdquo;
           </p>
-          <p className="text-eyebrow text-[var(--gold)]/55">— Affan &amp; Omer, Co-Founders</p>
+          <p className="eyebrow text-[0.62rem]" style={{ color: "var(--gold-dim)" }}>
+            — Affan &amp; Omer, Co-Founders
+          </p>
         </motion.div>
 
       </div>
 
-      <div className="divider-gold" aria-hidden="true" />
+      <div className="rule" aria-hidden="true" />
     </section>
   );
 }
