@@ -4,114 +4,19 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { EASE } from "@/lib/motion";
 import Script from "next/script";
-import { BOOKING_URL } from "@/lib/site";
-
-type Status = "idle" | "sending" | "success" | "error";
-interface FD {
-  name: string;
-  email: string;
-  company: string;
-  service: string;
-  message: string;
-}
-
-const SERVICES = [
-  "Data & Predictive Modeling",
-  "Agentic AI Framework",
-  "AI-Powered Web Development",
-  "AI Automation",
-  "AI Strategy Advisory",
-  "Product & Strategy",
-  "Business Development Support",
-  "Not sure — let's talk",
-];
-
-const INPUT = {
-  fontFamily: "var(--font-sans)",
-  fontSize: "15px",
-  padding: "14px 16px",
-  border: "1px solid var(--border)",
-  background: "var(--ivory)",
-  color: "var(--charcoal)",
-  width: "100%",
-  outline: "none",
-  transition: "border-color .18s ease",
-  display: "block",
-} as React.CSSProperties;
-
-function Field({
-  label, id, type = "text", required, value, onChange, placeholder,
-}: {
-  label: string; id: keyof FD; type?: string; required?: boolean;
-  value: string; onChange: (id: keyof FD, v: string) => void; placeholder?: string;
-}) {
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "var(--s-8)" }}>
-      <label htmlFor={id} className="t-eyebrow text-[11px]" style={{ color: "var(--charcoal-3)" }}>
-        {label}
-        {required && <span style={{ color: "var(--gold)", marginLeft: "4px" }} aria-hidden="true">*</span>}
-      </label>
-      <input
-        id={id} name={id} type={type} required={required} value={value}
-        onChange={e => onChange(id, e.target.value)}
-        placeholder={placeholder}
-        style={INPUT}
-        onFocus={e => { e.currentTarget.style.borderColor = "var(--gold)"; }}
-        onBlur={e =>  { e.currentTarget.style.borderColor = "var(--border)"; }}
-      />
-    </div>
-  );
-}
+import { BOOKING_URL, FOUNDERS } from "@/lib/site";
 
 export default function Contact() {
   const headRef = useRef<HTMLDivElement>(null);
   const inView  = useInView(headRef, { once: true, margin: "-80px" });
 
-  const [fd, setFd]       = useState<FD>({ name: "", email: "", company: "", service: "", message: "" });
-  const [status, setStatus] = useState<Status>("idle");
-  const [errorMsg, setErrorMsg] = useState<string>("");
-
-  // Calendly fallback — if env var isn't set, show a button instead
   const bookingUrl = BOOKING_URL;
   const [calendlyLoaded, setCalendlyLoaded] = useState(false);
 
-  // Detect reduced motion preference
   const [reducedMotion, setReducedMotion] = useState(false);
   useEffect(() => {
     setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   }, []);
-
-  const set = (id: keyof FD, v: string) => setFd(p => ({ ...p, [id]: v }));
-
-  const transProps = reducedMotion
-    ? { duration: 0 }
-    : { duration: 0.55 };
-
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("sending");
-    setErrorMsg("");
-
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        body: JSON.stringify(fd),
-        headers: { "Content-Type": "application/json" },
-      });
-
-      if (!res.ok) {
-        const json = await res.json().catch(() => ({}));
-        setErrorMsg((json as { error?: string }).error ?? "Something went wrong. Please try again.");
-        setStatus("error");
-        return;
-      }
-
-      setStatus("success");
-    } catch {
-      setErrorMsg("Network error. Please check your connection and try again.");
-      setStatus("error");
-    }
-  };
 
   return (
     <section id="contact" aria-labelledby="contact-h2" style={{ background: "var(--ivory)" }}>
@@ -122,7 +27,7 @@ export default function Contact() {
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={transProps}
+            transition={reducedMotion ? { duration: 0 } : { duration: .55 }}
             className="flex items-center gap-3"
             style={{ marginBottom: "var(--s-24)" }}
           >
@@ -157,16 +62,12 @@ export default function Contact() {
               </p>
 
               {[
-                { label: "Email",    value: "hello@aoholdings.com", href: "mailto:hello@aoholdings.com" },
                 { label: "Response", value: "Within 1 business day" },
                 { label: "Location", value: "Global — fully remote" },
-              ].map(({ label, value, href }) => (
+              ].map(({ label, value }) => (
                 <div key={label} style={{ display: "flex", gap: "var(--s-16)", marginBottom: "var(--s-16)", alignItems: "baseline" }}>
                   <span className="t-eyebrow text-[11px]" style={{ color: "var(--gold)", minWidth: "80px" }}>{label}</span>
-                  {href
-                    ? <a href={href} className="t-small text-link" style={{ color: "rgba(245,243,238,.65)" }}>{value}</a>
-                    : <span className="t-small" style={{ color: "rgba(245,243,238,.65)" }}>{value}</span>
-                  }
+                  <span className="t-small" style={{ color: "rgba(245,243,238,.65)" }}>{value}</span>
                 </div>
               ))}
             </motion.div>
@@ -174,121 +75,105 @@ export default function Contact() {
         </div>
       </div>
 
-      {/* ── Form + Booking — ivory ──────────────────────────────── */}
+      {/* ── Contact cards + Booking — ivory ────────────────────── */}
       <div className="container" style={{ paddingBlock: "var(--s-96)" }}>
         <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_0.7fr] gap-16">
 
-          {/* Form */}
+          {/* Founder contact cards */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={reducedMotion ? { duration: 0 } : { duration: .65, ease: EASE }}
+            style={{ display: "flex", flexDirection: "column", gap: "var(--s-24)" }}
           >
-            {status === "success" ? (
+            <div style={{ marginBottom: "var(--s-8)" }}>
+              <p className="t-eyebrow text-[11px]" style={{ color: "var(--charcoal-3)", marginBottom: "var(--s-16)" }}>
+                Reach us directly
+              </p>
+              <p className="t-body">
+                Email either founder directly — we both check our inboxes daily and reply within one business day.
+              </p>
+            </div>
+
+            {FOUNDERS.map((f, i) => (
               <motion.div
-                initial={{ opacity: 0, scale: .97 }}
-                animate={{ opacity: 1, scale: 1 }}
+                key={f.name}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={reducedMotion ? { duration: 0 } : { duration: .55, delay: i * .1, ease: EASE }}
                 style={{
-                  background: "var(--ivory-2)",
                   border: "1px solid var(--border)",
                   borderTop: "3px solid var(--gold)",
-                  padding: "var(--s-48)",
+                  padding: "var(--s-32)",
+                  background: "var(--ivory-2)",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "var(--s-16)",
                 }}
               >
-                <div style={{
-                  width: "48px", height: "48px",
-                  border: "2px solid var(--gold)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  marginBottom: "var(--s-24)",
-                }}>
-                  <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" stroke="var(--gold)" strokeWidth={2.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h3 className="t-h3" style={{ color: "var(--charcoal)", marginBottom: "var(--s-16)" }}>
-                  Message received.
-                </h3>
-                <p className="t-body">We&apos;ll come back to you within one business day.</p>
-              </motion.div>
-            ) : (
-              <form onSubmit={submit} noValidate style={{ display: "flex", flexDirection: "column", gap: "var(--s-24)" }}>
-                <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: "var(--s-24)" }}>
-                  <Field label="Full Name"  id="name"  required value={fd.name}  onChange={set} placeholder="Jane Smith" />
-                  <Field label="Work Email" id="email" type="email" required value={fd.email} onChange={set} placeholder="jane@company.com" />
-                </div>
-
-                <Field label="Company / Organisation" id="company" value={fd.company} onChange={set} placeholder="Acme Corp" />
-
-                <div style={{ display: "flex", flexDirection: "column", gap: "var(--s-8)" }}>
-                  <label htmlFor="service" className="t-eyebrow text-[11px]" style={{ color: "var(--charcoal-3)" }}>
-                    Area of Interest
-                  </label>
-                  <select
-                    id="service" name="service" value={fd.service}
-                    onChange={e => set("service", e.target.value)}
-                    style={{ ...INPUT, appearance: "none" as "none", color: fd.service ? "var(--charcoal)" : "var(--charcoal-3)" }}
-                    onFocus={e => { e.currentTarget.style.borderColor = "var(--gold)"; }}
-                    onBlur={e =>  { e.currentTarget.style.borderColor = "var(--border)"; }}
-                  >
-                    <option value="" disabled>Select a service area…</option>
-                    {SERVICES.map(o => <option key={o} value={o}>{o}</option>)}
-                  </select>
-                </div>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: "var(--s-8)" }}>
-                  <label htmlFor="message" className="t-eyebrow text-[11px]" style={{ color: "var(--charcoal-3)" }}>
-                    Tell us about your challenge
-                    <span style={{ color: "var(--gold)" }} aria-hidden="true"> *</span>
-                  </label>
-                  <textarea
-                    id="message" name="message" required rows={6} value={fd.message}
-                    onChange={e => set("message", e.target.value)}
-                    placeholder="Give us the rough shape of the problem — we'll ask the smart questions in the call."
-                    style={{ ...INPUT, resize: "none" as "none" }}
-                    onFocus={e => { e.currentTarget.style.borderColor = "var(--gold)"; }}
-                    onBlur={e =>  { e.currentTarget.style.borderColor = "var(--border)"; }}
-                  />
-                </div>
-
-                {status === "error" && (
-                  <p role="alert" style={{ color: "#dc2626", fontSize: "14px" }}>
-                    {errorMsg || "Something went wrong. Please try again."}
+                <div>
+                  <p style={{
+                    fontFamily: "var(--font-serif)",
+                    fontSize: "20px",
+                    fontWeight: 600,
+                    color: "var(--charcoal)",
+                    marginBottom: "4px",
+                  }}>
+                    {f.name}
                   </p>
-                )}
+                  <p className="t-small" style={{ color: "var(--charcoal-3)" }}>{f.focus}</p>
+                </div>
 
-                <button
-                  type="submit"
-                  disabled={status === "sending"}
-                  className="btn-primary self-start"
-                  style={{ opacity: status === "sending" ? .65 : 1 }}
-                >
-                  {status === "sending" ? (
-                    <>
-                      <span
-                        style={{
-                          width: "16px", height: "16px",
-                          border: "2px solid var(--charcoal)",
-                          borderTopColor: "transparent",
-                          borderRadius: "50%",
-                          display: "inline-block",
-                          animation: "spin 1s linear infinite",
-                        }}
-                        aria-hidden="true"
-                      />
-                      Sending…
-                    </>
-                  ) : (
-                    <>
-                      Send Message
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
-                    </>
-                  )}
-                </button>
-              </form>
-            )}
+                <div className="divider" aria-hidden="true" />
+
+                <div style={{ display: "flex", flexDirection: "column", gap: "var(--s-12)" }}>
+                  {/* Email — shown as clickable mailto */}
+                  <div style={{ display: "flex", gap: "var(--s-12)", alignItems: "center" }}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth={1.5}
+                      style={{ width: "16px", height: "16px", flexShrink: 0 }} aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round"
+                        d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                    </svg>
+                    <a
+                      href={`mailto:${i === 0 ? "affanaftab786@gmail.com" : "mohammedomerkhan516@gmail.com"}`}
+                      className="text-link"
+                      style={{
+                        fontFamily: "var(--font-sans)",
+                        fontSize: "15px",
+                        color: "var(--charcoal-2)",
+                        textDecoration: "none",
+                      }}
+                    >
+                      {i === 0 ? "affanaftab786@gmail.com" : "mohammedomerkhan516@gmail.com"}
+                    </a>
+                  </div>
+
+                  {/* LinkedIn */}
+                  <div style={{ display: "flex", gap: "var(--s-12)", alignItems: "center" }}>
+                    <svg viewBox="0 0 24 24" fill="var(--gold)"
+                      style={{ width: "16px", height: "16px", flexShrink: 0 }} aria-hidden="true">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                    </svg>
+                    <a
+                      href={f.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-link"
+                      style={{
+                        fontFamily: "var(--font-sans)",
+                        fontSize: "15px",
+                        color: "var(--charcoal-2)",
+                        textDecoration: "none",
+                      }}
+                    >
+                      LinkedIn
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </motion.div>
 
           {/* Calendly / booking sidebar */}
@@ -331,22 +216,21 @@ export default function Contact() {
                   )}
                 </>
               ) : (
-                /* Fallback when NEXT_PUBLIC_BOOKING_URL is not set */
                 <div style={{ padding: "var(--s-32)", display: "flex", flexDirection: "column", gap: "var(--s-16)", alignItems: "flex-start" }}>
                   <p className="t-body">
-                    Fill in the contact form and we&apos;ll schedule a call at a time that works for you.
+                    Email us directly and we&apos;ll schedule a call at a time that works for you.
                   </p>
                   <a
-                    href="#contact"
-                    onClick={e => { e.preventDefault(); document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" }); }}
+                    href={`mailto:affanaftab786@gmail.com`}
                     className="btn-primary"
                   >
-                    Send a Message
+                    Send an Email
                   </a>
                 </div>
               )}
             </div>
           </motion.div>
+
         </div>
       </div>
 
@@ -357,8 +241,6 @@ export default function Contact() {
           onLoad={() => setCalendlyLoaded(true)}
         />
       )}
-
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </section>
   );
 }
