@@ -1,4 +1,4 @@
-# A&O Holdings — Launch Checklist
+# A&O Holdings and Consulting — Launch Checklist
 
 Everything here requires *your* credentials or registrar access.
 Work through the steps in order — each one unblocks the next.

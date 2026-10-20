@@ -52,11 +52,11 @@ const schema = z.object({
 function buildHtml(data: z.infer<typeof schema>): string {
   return `<!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><title>New Enquiry — A&amp;O Holdings</title></head>
+<head><meta charset="UTF-8"><title>New Enquiry — A&amp;O Holdings and Consulting</title></head>
 <body style="margin:0;padding:0;background:#FAFAF8;font-family:Inter,system-ui,sans-serif;">
   <div style="max-width:600px;margin:40px auto;background:#fff;border:1px solid #E5E3DD;">
     <div style="background:#0B1220;padding:32px 40px;">
-      <p style="margin:0;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#C9A15B;font-weight:600;">A&amp;O Holdings</p>
+      <p style="margin:0;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#C9A15B;font-weight:600;">A&amp;O Holdings and Consulting</p>
       <p style="margin:8px 0 0;font-size:22px;font-weight:700;color:#F5F3EE;">New Enquiry</p>
     </div>
     <div style="padding:40px;">
@@ -85,7 +85,7 @@ function buildHtml(data: z.infer<typeof schema>): string {
 
 function buildText(data: z.infer<typeof schema>): string {
   return [
-    "NEW ENQUIRY — A&O Holdings",
+    "NEW ENQUIRY — A&O Holdings and Consulting",
     "─".repeat(40),
     `Name:    ${data.name}`,
     `Email:   ${data.email}`,
@@ -103,24 +103,24 @@ function buildText(data: z.infer<typeof schema>): string {
 function buildConfirmHtml(name: string): string {
   return `<!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><title>We received your message — A&amp;O Holdings</title></head>
+<head><meta charset="UTF-8"><title>We received your message — A&amp;O Holdings and Consulting</title></head>
 <body style="margin:0;padding:0;background:#FAFAF8;font-family:Inter,system-ui,sans-serif;">
   <div style="max-width:600px;margin:40px auto;background:#fff;border:1px solid #E5E3DD;">
     <div style="background:#0B1220;padding:32px 40px;">
-      <p style="margin:0;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#C9A15B;font-weight:600;">A&amp;O Holdings</p>
+      <p style="margin:0;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#C9A15B;font-weight:600;">A&amp;O Holdings and Consulting</p>
       <p style="margin:8px 0 0;font-size:22px;font-weight:700;color:#F5F3EE;">We&apos;ve received your message.</p>
     </div>
     <div style="padding:40px;">
       <p style="font-size:16px;line-height:1.7;color:#3D3D3D;">Hi ${escHtml(name)},</p>
       <p style="font-size:16px;line-height:1.7;color:#3D3D3D;">
-        Thank you for reaching out to A&amp;O Holdings. We&apos;ve received your message and will come back to you within <strong>1 business day</strong>.
+        Thank you for reaching out to A&amp;O Holdings and Consulting. We&apos;ve received your message and will come back to you within <strong>1 business day</strong>.
       </p>
       <p style="font-size:16px;line-height:1.7;color:#3D3D3D;">
         In the meantime, feel free to book a free 30-minute discovery call directly via our website.
       </p>
       <p style="margin-top:32px;font-size:15px;color:#6B6B6B;">
         — Affan &amp; Omer<br>
-        <span style="color:#C9A15B;">A&amp;O Holdings</span>
+        <span style="color:#C9A15B;">A&amp;O Holdings and Consulting</span>
       </p>
     </div>
   </div>
@@ -205,8 +205,8 @@ export async function POST(req: NextRequest) {
     // Use verified sender: if custom domain isn't set up yet, fall back to
     // Resend's onboarding address (works without domain verification).
     const fromAddress = process.env.RESEND_FROM_EMAIL
-      ? `A&O Holdings <${process.env.RESEND_FROM_EMAIL}>`
-      : "A&O Holdings <onboarding@resend.dev>";
+      ? `A&O Holdings and Consulting <${process.env.RESEND_FROM_EMAIL}>`
+      : "A&O Holdings and Consulting <onboarding@resend.dev>";
 
     // 1. Notify founders
     await resend.emails.send({
@@ -222,9 +222,9 @@ export async function POST(req: NextRequest) {
     resend.emails.send({
       from:    fromAddress,
       to:      [data.email],
-      subject: "We received your message — A&O Holdings",
+      subject: "We received your message — A&O Holdings and Consulting",
       html:    buildConfirmHtml(data.name),
-      text:    `Hi ${data.name},\n\nThank you for reaching out. We'll get back to you within 1 business day.\n\n— Affan & Omer, A&O Holdings`,
+      text:    `Hi ${data.name},\n\nThank you for reaching out. We'll get back to you within 1 business day.\n\n— Affan & Omer, A&O Holdings and Consulting`,
     }).catch(err => console.error("[contact] confirmation email failed:", err));
 
     return Response.json({ ok: true }, { status: 200 });

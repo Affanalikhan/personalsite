@@ -101,7 +101,7 @@ export default function TermsPage() {
             </h2>
             <p>
               All content on this website — including text, graphics, logos and code — is the
-              property of A&amp;O Holdings and is protected by applicable copyright and
+              property of A&amp;O Holdings and Consulting and is protected by applicable copyright and
               intellectual property laws. You may not reproduce, distribute or create derivative
               works without our prior written consent.
             </p>
@@ -123,7 +123,7 @@ export default function TermsPage() {
               4. Limitation of liability
             </h2>
             <p>
-              To the fullest extent permitted by law, A&amp;O Holdings shall not be liable for
+              To the fullest extent permitted by law, A&amp;O Holdings and Consulting shall not be liable for
               any indirect, incidental or consequential damages arising from your use of this
               website.
             </p>

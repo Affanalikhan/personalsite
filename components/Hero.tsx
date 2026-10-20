@@ -152,7 +152,7 @@ export default function Hero() {
               className="t-body mb-10"
               style={{ color: "rgba(245,243,238,.65)", maxWidth: "52ch" }}
             >
-              A&amp;O Holdings is a founder-led consultancy. We work directly
+              A&amp;O Holdings and Consulting is a founder-led consultancy. We work directly
               with companies across data science, AI systems, product strategy,
               and commercial growth — no account managers, no junior teams.
             </motion.p>

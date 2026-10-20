@@ -24,7 +24,7 @@ export default function Footer() {
           {/* Brand column */}
           <div>
             <div style={{ marginBottom: "var(--s-32)" }}>
-              <Link href="/" aria-label="A&O Holdings — Home" style={{ textDecoration: "none" }}>
+              <Link href="/" aria-label="A&O Holdings and Consulting — Home" style={{ textDecoration: "none" }}>
                 <span style={{
                   fontFamily: "var(--font-serif)",
                   fontSize: "clamp(40px,5vw,64px)",

@@ -51,7 +51,7 @@ export default function Navbar() {
           <div className="flex items-center justify-between gap-8">
 
             {/* Logo */}
-            <Link href="/" onClick={close} aria-label="A&O Holdings"
+            <Link href="/" onClick={close} aria-label="A&O Holdings and Consulting"
               className="flex items-center gap-3 flex-shrink-0"
             >
               <span

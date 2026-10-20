@@ -143,7 +143,7 @@ export default function Founders() {
               transition={{ duration: .6, delay: .16 }}
               className="t-body"
             >
-              A&amp;O Holdings is founder-led in the truest sense: both founders work directly
+              A&amp;O Holdings and Consulting is founder-led in the truest sense: both founders work directly
               on client engagements. You get senior expertise on every deliverable — not a
               junior team operating off a template.
             </motion.p>

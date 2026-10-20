@@ -31,11 +31,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
 
   title: {
-    default: "A&O Holdings — AI Strategy & Data Intelligence",
-    template: "%s | A&O Holdings",
+    default: "A&O Holdings and Consulting — AI Strategy & Data Intelligence",
+    template: "%s | A&O Holdings and Consulting",
   },
   description:
-    "A&O Holdings is a founder-led AI consultancy delivering predictive intelligence, agentic AI frameworks, AI-powered web products, and business growth strategy.",
+    "A&O Holdings and Consulting is a founder-led AI consultancy delivering predictive intelligence, agentic AI frameworks, AI-powered web products, and business growth strategy.",
   keywords: [
     "AI consulting",
     "data science",
@@ -56,8 +56,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: SITE_URL,
-    siteName: "A&O Holdings",
-    title: "A&O Holdings — AI Strategy & Data Intelligence",
+    siteName: "A&O Holdings and Consulting",
+    title: "A&O Holdings and Consulting — AI Strategy & Data Intelligence",
     description:
       "We build the models your competitors haven't thought of yet. Founder-led AI & data science consultancy.",
     images: [
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "A&O Holdings — AI Strategy & Data Intelligence",
+        alt: "A&O Holdings and Consulting — AI Strategy & Data Intelligence",
       },
     ],
   },
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
   // Twitter / X card
   twitter: {
     card: "summary_large_image",
-    title: "A&O Holdings — AI Strategy & Data Intelligence",
+    title: "A&O Holdings and Consulting — AI Strategy & Data Intelligence",
     description:
       "We build the models your competitors haven't thought of yet. Founder-led AI & data science consultancy.",
     images: ["/opengraph-image"],
@@ -112,11 +112,11 @@ const jsonLd = {
     {
       "@type": "ProfessionalService",
       "@id": `${SITE_URL}/#organization`,
-      name: "A&O Holdings",
+      name: "A&O Holdings and Consulting",
       url: SITE_URL,
       email: PUBLIC_EMAIL,
       description:
-        "A&O Holdings is a founder-led consultancy delivering predictive intelligence, agentic AI frameworks, AI-powered web products, and business growth strategy.",
+        "A&O Holdings and Consulting is a founder-led consultancy delivering predictive intelligence, agentic AI frameworks, AI-powered web products, and business growth strategy.",
       areaServed: "Worldwide",
       serviceType: [
         "AI Strategy Advisory",
@@ -137,7 +137,7 @@ const jsonLd = {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: "A&O Holdings",
+      name: "A&O Holdings and Consulting",
       publisher: { "@id": `${SITE_URL}/#organization` },
     },
   ],

@@ -91,7 +91,7 @@ export default function PrivacyPage() {
               1. Who we are
             </h2>
             <p>
-              A&amp;O Holdings (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is an independent AI and data science
+              A&amp;O Holdings and Consulting (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is an independent AI and data science
               consultancy. Our website is <a href={SITE_URL} style={{ color: "var(--gold)" }}>{SITE_URL}</a>. You can
               contact us at <a href={`mailto:${PUBLIC_EMAIL}`} style={{ color: "var(--gold)" }}>{PUBLIC_EMAIL}</a>.
             </p>
