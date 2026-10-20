@@ -47,8 +47,7 @@ export default function Footer() {
             </div>
 
             <p className="t-body" style={{ color: "rgba(245,243,238,.5)", maxWidth: "34ch", marginBottom: "var(--s-32)" }}>
-              Independent consulting at the intersection of data science, AI,
-              product strategy, and commercial growth.
+              Independent consulting across AI, data science, and business growth — for businesses of any kind.
             </p>
 
             <a href="#contact"

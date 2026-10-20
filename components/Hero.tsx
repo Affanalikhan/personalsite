@@ -8,7 +8,7 @@ import { EASE } from "@/lib/motion";
 const TICKER = [
   "Predictive Modeling", "Agentic AI Systems", "AI-Powered Web",
   "Business Automation", "AI Strategy Advisory", "Data Intelligence",
-  "Product Management", "Contract Acquisition",
+  "Business Growth Advisory", "Product Management", "Contract Acquisition",
 ];
 
 /* ── Geometric SVG decoration ──────────────────────────────────── */
@@ -153,8 +153,9 @@ export default function Hero() {
               style={{ color: "rgba(245,243,238,.65)", maxWidth: "52ch" }}
             >
               A&amp;O Holdings and Consulting is a founder-led consultancy. We work directly
-              with companies across data science, AI systems, product strategy,
-              and commercial growth — no account managers, no junior teams.
+              with businesses of all kinds — across AI, data science, and commercial growth.
+              Whether you need technology or just a clear plan, we&apos;ll tell you honestly
+              what will move the needle. No account managers, no junior teams.
             </motion.p>
 
             {/* CTAs */}
@@ -193,16 +194,17 @@ export default function Hero() {
             <GeometricDecor />
           </motion.div>
 
-          {/* Floating tag pills — 8 capabilities arranged across the panel */}
+          {/* Floating tag pills */}
           {[
-            { label: "Data Science",         top: "10%",  left: "6%"   },
-            { label: "Agentic AI",           top: "10%",  right: "5%"  },
-            { label: "Predictive Modeling",  top: "28%",  left: "3%"   },
-            { label: "AI Automation",        top: "28%",  right: "3%"  },
-            { label: "Product Strategy",     top: "50%",  left: "5%"   },
-            { label: "Web Development",      top: "50%",  right: "4%"  },
-            { label: "Commercial Growth",    top: "70%",  left: "7%"   },
-            { label: "Business Analysis",    top: "70%",  right: "5%"  },
+            { label: "Data Science",         top: "8%",   left: "6%"   },
+            { label: "Agentic AI",           top: "8%",   right: "5%"  },
+            { label: "Predictive Modeling",  top: "24%",  left: "3%"   },
+            { label: "AI Automation",        top: "24%",  right: "3%"  },
+            { label: "Business Advisory",    top: "42%",  left: "4%"   },
+            { label: "Product Strategy",     top: "42%",  right: "4%"  },
+            { label: "Web Development",      top: "60%",  left: "5%"   },
+            { label: "Commercial Growth",    top: "60%",  right: "4%"  },
+            { label: "Business Analysis",    top: "76%",  left: "7%"   },
           ].map(({ label, ...pos }, idx) => (
             <motion.div
               key={label}

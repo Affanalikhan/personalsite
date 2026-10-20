@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     template: "%s | A&O Holdings and Consulting",
   },
   description:
-    "A&O Holdings and Consulting is a founder-led AI consultancy delivering predictive intelligence, agentic AI frameworks, AI-powered web products, and business growth strategy.",
+    "A&O Holdings and Consulting is a founder-led consultancy delivering AI strategy, data science, and business growth advisory — for businesses of any kind, with or without AI.",
   keywords: [
     "AI consulting",
     "data science",
@@ -45,6 +45,10 @@ export const metadata: Metadata = {
     "business analytics",
     "AI strategy",
     "machine learning consulting",
+    "business growth consulting",
+    "business growth advisory",
+    "business strategy consulting",
+    "small business consulting",
   ],
 
   // Canonical

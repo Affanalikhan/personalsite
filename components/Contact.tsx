@@ -57,8 +57,10 @@ export default function Contact() {
               transition={reducedMotion ? { duration: 0 } : { duration: .6, delay: .16 }}
             >
               <p className="t-body" style={{ color: "rgba(245,243,238,.6)", marginBottom: "var(--s-32)" }}>
-                Start with a free 30-minute discovery call. No pitch, no obligation. We&apos;ll
-                understand your situation and tell you honestly whether and how we can help.
+                Start with a free 30-minute discovery call. No pitch, no obligation.
+                Whether you&apos;re a tech company, a retailer, a service business, or
+                anything else — if you&apos;re asking &ldquo;what should we do next?&rdquo;,
+                that&apos;s exactly where we start.
               </p>
 
               {[

@@ -30,8 +30,9 @@ const PILLARS = [
     id: "growth", num: "03",
     label: "Growth & Business Development",
     tagline: "Pipeline, contracts, commercial momentum.",
-    description: "Beyond technical work, we help small and growing companies with the commercial infrastructure they often lack. Contract acquisition, sales systems, opening doors — delivered as independent consulting.",
+    description: "Beyond technical work, we help businesses of all kinds — e-commerce, retail, service businesses, local and traditional companies, startups and established firms — with the commercial foundations they need to grow. Whether the question is how to find new customers, grow revenue, fix operations, or simply decide what to do next, we help you think it through and build a plan you can actually execute. AI is one tool among several; we'll only recommend it when it genuinely helps.",
     services: [
+      { name: "Business Growth Advisory", body: "We work with any type of business — from a local service company to an e-commerce brand to a growing startup. We look at pricing, positioning, customer acquisition, retention, and operations, and we build a clear plan for what to do next. No jargon, no fluff." },
       { name: "Contract Acquisition Support", body: "Identify, pursue, and win high-value contracts — public-sector tenders, enterprise procurement, framework agreements. Opportunity mapping, bid strategy, proposal structuring." },
       { name: "Sales & Business Development", body: "Repeatable sales infrastructure: ICP definition, outreach sequencing, pipeline architecture, partner strategy, CRM setup. We can run outbound programmes on your behalf with full transparency." },
     ],
@@ -200,9 +201,9 @@ export default function Services() {
               transition={{ duration: .6, delay: .16 }}
               className="t-body"
             >
-              Four service pillars — data intelligence, AI enablement, commercial
-              growth, and product strategy. Each designed to compound on the others.
-              We work across all four, or go deep on one.
+              Five service pillars — data intelligence, AI enablement, business growth
+              advisory, commercial development, and product strategy. Each designed to
+              compound on the others. We work across all five, or go deep on one.
             </motion.p>
           </div>
         </div>
