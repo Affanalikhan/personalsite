@@ -4,34 +4,10 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import { EASE } from "@/lib/motion";
+import { FOUNDERS } from "@/lib/site";
 
-const FOUNDERS = [
-  {
-    name: "Affan Ali Khan",
-    role: "Co-Founder",
-    focus: "Data Science & AI Architecture",
-    photo: "/affanalikhan.jpeg",
-    bio: "Affan leads the technical side of A&O Holdings. His work sits at the intersection of data science and AI systems engineering — building predictive models that inform high-stakes business decisions and designing multi-agent AI frameworks that operate inside real workflows.",
-    extended: "He takes a problem-first approach to every engagement: the right technical solution only becomes clear after you fully understand what the business is actually trying to achieve. Affan has experience across the full data science lifecycle — problem framing, feature engineering, model development, MLOps, and deployment — and brings the same rigour to agentic AI architecture and AI-native web development.",
-    linkedin: "https://www.linkedin.com/in/affan-ali-khan-679a27249/",
-    tags: ["Predictive Modeling", "Agentic AI", "ML Engineering", "AI-Powered Web"],
-    accent: "#1e40af",
-  },
-  {
-    name: "Mohammed Omer Khan",
-    role: "Co-Founder",
-    focus: "Commercial Strategy & AI Enablement",
-    photo: "/mohammedomerkhan.jpeg",
-    bio: "Omer leads the commercial and strategic side of A&O Holdings — client relationships, business development, and the translation of AI capability into business value. He has a sharp instinct for where AI creates genuine advantage versus where it's a distraction.",
-    extended: "He runs engagements spanning AI strategy advisory, workflow automation, contract acquisition, and sales infrastructure. Every recommendation is tested against ROI, feasibility, and what the client's team can actually sustain long-term.",
-    linkedin: "https://www.linkedin.com/in/mohammedomer112/",
-    tags: ["AI Strategy", "Business Development", "AI Automation", "Contract Acquisition"],
-    accent: "var(--gold)",
-  },
-];
-
-function FounderCard({ f, i }: { f: typeof FOUNDERS[0]; i: number }) {
-  const ref   = useRef<HTMLDivElement>(null);
+function FounderCard({ f, i }: { f: typeof FOUNDERS[number]; i: number }) {
+  const ref    = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
@@ -53,7 +29,7 @@ function FounderCard({ f, i }: { f: typeof FOUNDERS[0]; i: number }) {
         onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}
         className="lg:grid-cols-[280px_1fr]"
       >
-        {/* LEFT — accent sidebar ─────────────────────────────────── */}
+        {/* LEFT — accent sidebar */}
         <div
           style={{
             background: "var(--navy)",
@@ -67,7 +43,6 @@ function FounderCard({ f, i }: { f: typeof FOUNDERS[0]; i: number }) {
             borderRight: "1px solid rgba(255,255,255,.07)",
           }}
         >
-          {/* Photo */}
           <div style={{
             width: "120px", height: "120px",
             border: `2px solid ${f.accent}`,
@@ -93,7 +68,6 @@ function FounderCard({ f, i }: { f: typeof FOUNDERS[0]; i: number }) {
             <p className="t-small mt-2" style={{ color: "rgba(245,243,238,.45)" }}>{f.focus}</p>
           </div>
 
-          {/* LinkedIn */}
           <a href={f.linkedin} target="_blank" rel="noopener noreferrer"
             className="btn-secondary-light mt-2"
             style={{ padding: "10px 20px", fontSize: "12px" }}
@@ -106,16 +80,13 @@ function FounderCard({ f, i }: { f: typeof FOUNDERS[0]; i: number }) {
           </a>
         </div>
 
-        {/* RIGHT — content ────────────────────────────────────────── */}
+        {/* RIGHT — content */}
         <div style={{ padding: "var(--s-48) var(--s-48)" }}>
-          {/* Bio */}
           <p className="t-body mb-4">{f.bio}</p>
           <p className="t-body" style={{ marginBottom: "var(--s-32)" }}>{f.extended}</p>
 
-          {/* Divider */}
           <div className="divider" style={{ marginBottom: "var(--s-24)" }} aria-hidden="true" />
 
-          {/* Expertise tags */}
           <p className="t-eyebrow text-[11px] mb-3" style={{ color: "var(--charcoal-3)" }}>Areas of Expertise</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--s-8)" }}>
             {f.tags.map(t => (
@@ -149,7 +120,6 @@ export default function Founders() {
       style={{ background: "var(--ivory-2)", paddingBlock: "var(--s-96)" }}
     >
       <div className="container">
-        {/* Header */}
         <div ref={headRef} style={{ marginBottom: "var(--s-64)" }}>
           <motion.div initial={{ opacity: 0, y: 14 }} animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: .55 }}
@@ -180,12 +150,10 @@ export default function Founders() {
           </div>
         </div>
 
-        {/* Cards */}
         <div style={{ display: "flex", flexDirection: "column", gap: "var(--s-24)" }}>
           {FOUNDERS.map((f, i) => <FounderCard key={f.name} f={f} i={i} />)}
         </div>
 
-        {/* Quote */}
         <motion.blockquote
           initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           transition={{ duration: .65, delay: .3 }}

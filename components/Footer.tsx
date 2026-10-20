@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { FOUNDERS } from "@/lib/site";
 
 const NAV = [
   { label: "Services",    href: "#services"  },
@@ -22,11 +23,8 @@ export default function Footer() {
 
           {/* Brand column */}
           <div>
-            {/* Large wordmark */}
             <div style={{ marginBottom: "var(--s-32)" }}>
-              <Link href="/" aria-label="A&O Holdings — Home"
-                style={{ textDecoration: "none" }}
-              >
+              <Link href="/" aria-label="A&O Holdings — Home" style={{ textDecoration: "none" }}>
                 <span style={{
                   fontFamily: "var(--font-serif)",
                   fontSize: "clamp(40px,5vw,64px)",
@@ -35,9 +33,7 @@ export default function Footer() {
                   lineHeight: 1,
                   color: "var(--off-white)",
                   display: "block",
-                }}>
-                  A&amp;O
-                </span>
+                }}>A&amp;O</span>
                 <span style={{
                   fontFamily: "var(--font-serif)",
                   fontSize: "clamp(40px,5vw,64px)",
@@ -46,9 +42,7 @@ export default function Footer() {
                   lineHeight: 1,
                   color: "var(--gold)",
                   display: "block",
-                }}>
-                  Holdings
-                </span>
+                }}>Holdings</span>
               </Link>
             </div>
 
@@ -71,7 +65,7 @@ export default function Footer() {
           {/* Navigation */}
           <div>
             <p className="t-eyebrow text-[11px]" style={{ color: "var(--gold)", marginBottom: "var(--s-24)" }}>Navigation</p>
-            <nav style={{ display: "flex", flexDirection: "column", gap: "var(--s-16)" }} aria-label="Footer">
+            <nav style={{ display: "flex", flexDirection: "column", gap: "var(--s-16)" }} aria-label="Footer navigation">
               {NAV.map(({ label, href }) => (
                 <a key={href} href={href}
                   onClick={e => { e.preventDefault(); goto(href); }}
@@ -89,19 +83,21 @@ export default function Footer() {
             </nav>
           </div>
 
-          {/* Founders */}
+          {/* Founders — sourced from lib/site.ts */}
           <div>
             <p className="t-eyebrow text-[11px]" style={{ color: "var(--gold)", marginBottom: "var(--s-24)" }}>Co-Founders</p>
             <div style={{ display: "flex", flexDirection: "column", gap: "var(--s-16)" }}>
-              {[
-                { name: "Affan Ali Khan",    focus: "Data Science & AI",        href: "https://linkedin.com/in/affan-ali-khan" },
-                { name: "Mohammed Omer Khan", focus: "Strategy & BD",             href: "https://linkedin.com/in/mohammed-omer-khan" },
-              ].map(({ name, focus, href }) => (
-                <a key={name} href={href} target="_blank" rel="noopener noreferrer"
+              {FOUNDERS.map(({ name, focus, linkedin }) => (
+                <a key={name} href={linkedin} target="_blank" rel="noopener noreferrer"
                   style={{ textDecoration: "none" }}
+                  aria-label={`${name} on LinkedIn`}
                 >
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "14px", fontWeight: 500, color: "rgba(245,243,238,.7)", marginBottom: "2px" }}>{name}</p>
-                  <p className="t-small" style={{ color: "rgba(245,243,238,.35)", fontSize: "12px" }}>{focus}</p>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: "14px", fontWeight: 500, color: "rgba(245,243,238,.7)", marginBottom: "2px" }}>
+                    {name}
+                  </p>
+                  <p className="t-small" style={{ color: "rgba(245,243,238,.35)", fontSize: "12px" }}>
+                    {focus}
+                  </p>
                 </a>
               ))}
             </div>
@@ -115,18 +111,26 @@ export default function Footer() {
           style={{
             paddingBlock: "var(--s-24)",
             display: "flex",
-            flexDirection: "column",
-            gap: "var(--s-8)",
-            alignItems: "flex-start",
+            flexWrap: "wrap",
+            gap: "var(--s-16)",
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
-          <div className="flex flex-wrap gap-6 justify-between w-full items-center">
-            <p style={{ fontFamily: "var(--font-sans)", fontSize: "13px", color: "rgba(245,243,238,.3)" }}>
-              © {new Date().getFullYear()} A&amp;O Holdings. All rights reserved.
-            </p>
-            <p style={{ fontFamily: "var(--font-sans)", fontSize: "13px", color: "rgba(245,243,238,.2)" }}>
-              Founded by Affan Ali Khan &amp; Mohammed Omer Khan
-            </p>
+          <p style={{ fontFamily: "var(--font-sans)", fontSize: "13px", color: "rgba(245,243,238,.3)" }}>
+            © {new Date().getFullYear()} A&amp;O Holdings. All rights reserved.
+          </p>
+          <div style={{ display: "flex", gap: "var(--s-24)", alignItems: "center" }}>
+            <Link href="/privacy"
+              style={{ fontFamily: "var(--font-sans)", fontSize: "13px", color: "rgba(245,243,238,.3)", textDecoration: "none" }}
+            >
+              Privacy Policy
+            </Link>
+            <Link href="/terms"
+              style={{ fontFamily: "var(--font-sans)", fontSize: "13px", color: "rgba(245,243,238,.3)", textDecoration: "none" }}
+            >
+              Terms of Use
+            </Link>
           </div>
         </div>
       </div>

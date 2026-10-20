@@ -49,7 +49,10 @@
 
 /* ═══ Reset ════════════════════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; overflow-x: hidden; }
+html { overflow-x: hidden; }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
 
 body {
   background: var(--ivory);
@@ -60,10 +63,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  cursor: none;
 }
 
-a, button, input, textarea, select, [role="button"] { cursor: none; }
+/* Custom cursor only on fine-pointer (mouse) devices */
+@media (pointer: fine) {
+  body { cursor: none; }
+  a, button, input, textarea, select, [role="button"] { cursor: none; }
+}
 
 /* ═══ Custom cursor ════════════════════════════════════════════════ */
 #cursor-dot {
@@ -86,8 +92,8 @@ a, button, input, textarea, select, [role="button"] { cursor: none; }
 }
 body.cursor-hover #cursor-dot  { width: 9px; height: 9px; }
 body.cursor-hover #cursor-ring { width: 44px; height: 44px; border-color: rgba(201,161,91,.28); }
-@media (hover:none) {
-  body, a, button, input, textarea, select, [role="button"] { cursor: auto; }
+/* Hide cursor elements on touch/coarse-pointer devices */
+@media (pointer: coarse), (hover: none) {
   #cursor-dot, #cursor-ring { display: none !important; }
 }
 
