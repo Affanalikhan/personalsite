@@ -202,9 +202,15 @@ export async function POST(req: NextRequest) {
   const subject = `New enquiry – ${data.service || "General"} – ${data.name}`;
 
   try {
+    // Use verified sender: if custom domain isn't set up yet, fall back to
+    // Resend's onboarding address (works without domain verification).
+    const fromAddress = process.env.RESEND_FROM_EMAIL
+      ? `A&O Holdings <${process.env.RESEND_FROM_EMAIL}>`
+      : "A&O Holdings <onboarding@resend.dev>";
+
     // 1. Notify founders
     await resend.emails.send({
-      from:     "A&O Holdings <hello@aoholdings.com>",
+      from:     fromAddress,
       to,
       replyTo:  data.email,
       subject,
@@ -214,7 +220,7 @@ export async function POST(req: NextRequest) {
 
     // 2. Confirmation to visitor (fire-and-forget — don't fail the whole request)
     resend.emails.send({
-      from:    "A&O Holdings <hello@aoholdings.com>",
+      from:    fromAddress,
       to:      [data.email],
       subject: "We received your message — A&O Holdings",
       html:    buildConfirmHtml(data.name),
