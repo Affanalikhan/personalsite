@@ -71,7 +71,7 @@ export default function Navbar() {
                   color: "var(--off-white)",
                 }}
               >
-                Holdings
+                Holdings &amp; Consulting
               </span>
             </Link>
 
